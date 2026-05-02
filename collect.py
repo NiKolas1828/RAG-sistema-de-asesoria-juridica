@@ -1,6 +1,8 @@
 import glob
 import os
 import sqlite3
+import json
+import re
 from pathlib import Path
 
 # Librerías necesarias para leer documentos.
@@ -177,6 +179,53 @@ def process_documents():
     conn.close()
     print("\n[*] Proceso de recolección completado.")
 
+DB_PATH = os.path.join(BASE_DIR, "data", "normas.db")
+
+def limpiar_contenido(texto: str) -> str:
+    texto = re.sub(r'Ministerio de\s+\w+.*?Página\s+\d+\s+de\s+\d+', '', texto, flags=re.IGNORECASE|re.DOTALL)
+    texto = re.sub(r'[-─═_]{3,}', '', texto)
+    texto = re.sub(r'\bPágina\s+\d+\s*(de\s+\d+)?\b', '', texto, flags=re.IGNORECASE)
+    texto = re.sub(r'\n{3,}', '\n\n', texto)
+    texto = re.sub(r'[ \t]+', ' ', texto)
+    return texto.strip()
+
+def extraer_metadata(titulo: str) -> dict:
+    """Extrae año y tipo desde el título del documento."""
+    anio = re.search(r'\b(19|20)\d{2}\b', titulo)
+    tipo = "ley" if "ley" in titulo.lower() else \
+           "resolucion" if "resolución" in titulo.lower() or "resolucion" in titulo.lower() else \
+           "decreto" if "decreto" in titulo.lower() else "otro"
+    return {
+        "anio": anio.group() if anio else None,
+        "tipo_detectado": tipo
+    }
+
+def estandarizar():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT id, titulo, tipo, contenido FROM documentos WHERE procesado = 0")
+    docs = cursor.fetchall()
+    
+    print(f"Documentos por procesar: {len(docs)}")
+    
+    for doc_id, titulo, tipo, contenido in docs:
+        contenido_limpio = limpiar_contenido(contenido or "")
+        metadata = extraer_metadata(titulo or "")
+        
+        # Actualizar en la misma DB
+        cursor.execute("""
+            UPDATE documentos 
+            SET contenido = ?, tipo = ?, procesado = 1
+            WHERE id = ?
+        """, (contenido_limpio, metadata["tipo_detectado"], doc_id))
+        
+        print(f"  ✓ [{doc_id}] {titulo[:60]}")
+    
+    conn.commit()
+    conn.close()
+    print("Estandarización completa.")
 
 if __name__ == "__main__":
     process_documents()
+    estandarizar()
