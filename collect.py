@@ -1,12 +1,9 @@
 import glob
 import os
 import sqlite3
-import json
 import re
 from pathlib import Path
 
-# Librerías necesarias para leer documentos.
-# Instalar con: pip install pypdf python-docx beautifulsoup4 pdf2image pytesseract Pillow
 try:
     import docx
     import pytesseract
@@ -200,32 +197,65 @@ def extraer_metadata(titulo: str) -> dict:
         "tipo_detectado": tipo
     }
 
-def estandarizar():
+def normalize_for_embeddings(texto: str) -> str:
+    """
+    Normalización optimizada para embeddings de documentos legales.
+    Mantiene estructura semántica pero limpia ruido.
+    """
+    if not texto:
+        return ""
+    texto = limpiar_contenido(texto)
+    texto = texto.lower()
+    texto = re.sub(r'http\S+|www\.\S+', '', texto)
+    texto = re.sub(r'\[\d+\]', '', texto)
+    texto = re.sub(r'[^\w\s.,;:()áéíóúüñ¿¡\-]', ' ', texto)
+    texto = re.sub(r'\s+', ' ', texto)
+    texto = re.sub(r'\s+([.,;:()])', r'\1', texto)
+    
+    return texto.strip()
+
+def standardize():
+    """Aplica limpieza Y normalización NLP a todos los documentos"""
+    
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
-    cursor.execute("SELECT id, titulo, tipo, contenido FROM documentos WHERE procesado = 0")
+    try:
+        cursor.execute("ALTER TABLE documentos ADD COLUMN contenido_nlp TEXT")
+        cursor.execute("ALTER TABLE documentos ADD COLUMN normalizado INTEGER DEFAULT 0")
+    except sqlite3.OperationalError:
+        pass
+    
+    cursor.execute("""
+        SELECT id, titulo, tipo, contenido 
+        FROM documentos 
+        WHERE normalizado = 0 OR normalizado IS NULL
+    """)
     docs = cursor.fetchall()
     
-    print(f"Documentos por procesar: {len(docs)}")
+    print(f"Documentos por normalizar: {len(docs)}")
     
-    for doc_id, titulo, tipo, contenido in docs:
+    for doc_id, titulo, contenido in docs:
         contenido_limpio = limpiar_contenido(contenido or "")
+        contenido_nlp = normalize_for_embeddings(contenido_limpio)
         metadata = extraer_metadata(titulo or "")
         
-        # Actualizar en la misma DB
         cursor.execute("""
             UPDATE documentos 
-            SET contenido = ?, tipo = ?, procesado = 1
+            SET contenido = ?, 
+                tipo = ?, 
+                contenido_nlp = ?,
+                procesado = 1,
+                normalizado = 1
             WHERE id = ?
-        """, (contenido_limpio, metadata["tipo_detectado"], doc_id))
+        """, (contenido_limpio, metadata["tipo_detectado"], contenido_nlp, doc_id))
         
-        print(f"  ✓ [{doc_id}] {titulo[:60]}")
+        print(f"  ✓ [{doc_id}] {titulo[:50]}... ({len(contenido_nlp)} caracteres NLP)")
     
     conn.commit()
     conn.close()
-    print("Estandarización completa.")
+    print("Normalización completada")
 
 if __name__ == "__main__":
     process_documents()
-    estandarizar()
+    standardize()
