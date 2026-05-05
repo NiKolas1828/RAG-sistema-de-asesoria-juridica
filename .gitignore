@@ -1,10 +1,7 @@
+data/*.db
+data/*.sqlite3
 
-data/.db
-data/.sqlite3
-
-
-data/reporte_validacion.csv
-
+data/*.csv
 
 venv/
 env/
