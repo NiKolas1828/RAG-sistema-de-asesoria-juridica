@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head prefix="og: http://ogp.me/ns# ">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Documentos</title>
+<meta name="author" content="Mintransporte" />
+<meta name="language" content="spanish" />
+<meta property="og:locale" content="es_la" />
+<meta property="og:locale:alternate" content="es_es" />
+<meta property="og:site_name" content="Mintransporte" />
+<meta name="description" content="Documentos" />
+<meta property="og:title" content="Documentos" />
+<meta property="og:description" content="Documentos" />
+<meta property="og:url" content="https://mintransporte.gov.co/documentos/" />
+<meta property="og:type" content="website" />
+<meta name="twitter:title" content="Documentos" />
+<meta name="twitter:description" content="Documentos" />
+<meta name="twitter:url" content="https://mintransporte.gov.co/documentos/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@Cliente" />
+<meta name="twitter:creator" content="@Cliente" />
+<link href="https://mintransporte.gov.co/documentos/" rel="canonical" />
+<meta name="Robots" content="index,follow" />
+<meta name="status" content="mintransporte.gov.co" />
+<link rel="shortcut icon" href="https://mintransporte.gov.co/info/mintransporte/web/portal/img/favicon.png" />
+<style>
+  /* Cambio de tamaño de logo */
+  .logo-x2 .header_entidad .row .logo_entidad a.logo_horizontal img {
+    max-height: 84px !important;
+  }
+  @media screen and (max-width: 767px) {
+    .header-block.logo-x2 .header_entidad .buscar_entidad {
+      top: 141px !important;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .header-block.logo-x2 .header_entidad .buscar_entidad {
+      top: 114px !important;
+    }
+  }
+  /* Quitar icono duplicado */
+  .float-buttons-social ul li a.fa-tiktok::before {
+    content: none !important;
+  }
+
+  /* LENGUAJE DE SEÑAS */
+  /* Trámites y Servicios */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-32:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-32:after {
+    background: url(/info/mintransporte/media/galeria21962.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* consulta de acceso a información pública y servicios en linea */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-33:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-33:after {
+    background: url(/info/mintransporte/media/galeria21964.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* canales de atención y pida una cita */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-34:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-34:after {
+    background: url(/info/mintransporte/media/galeria21965.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* Radicación de PQRSD */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-35:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-35:after {
+    background: url(/info/mintransporte/media/galeria21972.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* respuesta a peticiones imposibles, anónima */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-36:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-36:after {
+    background: url(/info/mintransporte/media/galeria21963.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* Pagos en línea */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-37:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-37:after {
+    background: url(/info/mintransporte/media/galeria21970.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* Protocolo de servicio al ciudadano */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-38:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-38:after {
+    background: url(/info/mintransporte/media/galeria21971.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* caracterización de usuarios */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-39:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-39:after {
+    background: url(/info/mintransporte/media/galeria21966.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* información para la ciudadanía */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-40:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-40:after {
+    background: url(/info/mintransporte/media/galeria21969.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* encuesta de usabilidad para sedes electrónicas */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-41:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-41:after {
+    background: url(/info/mintransporte/media/galeria21968.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+  /* documentos de interes para la ciudadanía */
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:focus-within.signal-42:after,
+  header
+    .u-menu
+    .sign-menu
+    ul.lista-enlaces
+    > li
+    > a[class*="signal"]:hover.signal-42:after {
+    background: url(/info/mintransporte/media/galeria21967.gif) center center
+      no-repeat #fff !important;
+    background-size: cover !important;
+  }
+</style>
+<link href="https://mintransporte.gov.co/media/plugins/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="https://mintransporte.gov.co/media/plugins/fontawesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/media/plugins/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/media/plugins/slick/1.6.0/slick.css" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/media/plugins/slick/1.6.0/slick-theme.css" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/media/plugins/calendar/jquery-timepicker/1.4.4/jquery-ui-timepicker-addon.min.css" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueFooter.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueDynamic.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/animate.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueAccesibilidad.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueCookie.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueInformacionUsuario.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueHeader.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Bloques/css/bloqueMegamenu.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/media/css/user.govco.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/mod/Documentos/css/user.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+<link href="https://mintransporte.gov.co/info/mintransporte/web/portal/css/user.min.css?nxcache=1732048722" rel="stylesheet" type="text/css" />
+
+<script  src="https://mintransporte.gov.co/media/plugins/jquery/3.1.0/jquery.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/language/default/language.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/jqueryValidate/1.12.0/dist/jquery.validate.min.js"></script>
+
+<style>
+        :root { --img-watermark-1: url("/info/mintransporte/media/galeria22059.png")no-repeat;--img-watermark-2: url("/info/mintransporte/media/galeria22060.png")no-repeat;--img-watermark-3: url("/info/mintransporte/media/galeria22061.png")no-repeat;--img-watermark-4: url("/info/mintransporte/media/galeria22062.png")no-repeat;}
+        </style></head>
+<body class="SearchResults dModDocumentos SearchResults dModDocumentos SearchResultsLista_categoria0">
+<header>
+	<!-- inicio cache zona#1 (2026/04/24 09:18:35) -->
+<div class="tabla1 tablaBloque2475 sr-only "
+    >
+    
+    <div class="contenido1">
+        <h1>Ministerio de Transporte - Colombia</h1>
+    </div>
+</div><div class='bloqueZona1  tipoDisplay'><div class="header-block tabla1 tablaBloque2452 logo-x2 ">
+	<div class="header-gov ">
+		<div class="container">
+			<div class="row">
+				<!-- logo -->
+				<div class="col-xs-8 col-sm-4 logo-gov">
+					<a href="https://www.gov.co/" title="Gobierno de Colombia" target="_blank">
+						<img class="img-responsive " src="/mod/Bloques/img/logo_gov_co-v2.svg" id="bloqueImg" alt="">
+					</a>
+				</div>
+
+												<div class="col-xs-4 col-sm-8 toolbar-gov-co">
+					<div class="toolbar-header-gov">
+							<ul class="list-inline text-right toolbar-login">										<!-- language en -->
+								<li class="toolbar_language toolbar_language--en notranslate" tabindex='2'>
+									<a href="#" class="lang_button notranslate idiomaHiper" data-lang="EN">
+											EN
+									</a>
+								</li>
+								<!-- end language en -->
+								<!-- language es -->
+								<li class="toolbar_language toolbar_language--es notranslate">
+									<a href="#" class="lang_button notranslate lang_active idiomaHiper" data-lang="ES">
+									ES
+									</a>
+								</li>
+								<!-- end language es -->
+							</ul>
+					</div>
+				</div>
+
+
+								
+				<!-- end toolbar -->
+			</div>
+		</div>
+	</div>
+	<!-- END HEADER GOVCO -->
+
+	<div class="header_entidad container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo_entidad">
+				<a href="/index.php" class="logo_horizontal">
+					<img class="img-responsive " src="/info/mintransporte/media/bloqueheader2452.png" alt="Ministerio de transporte">
+				</a>
+			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 buscar_entidad">
+				<ul class="list-unstyled text-right toolbar_login_buscar">
+																									<li class="bloque_buscar">
+						<form action="/buscar/" class="form-horizontal" method="get">
+							<fieldset>
+								<label class="sr-only" for="search-box">Buscar...</label>
+								<input id="search-box" class="form-control search-mod search-box" placeholder="Buscar..." name="q" value="" type="search">
+								<button class="btn_search" type="submit">
+									
+									<span class="fa fa-search"></span>
+									<span class="hidden">Buscar</span>
+								</button>
+								<!-- <input type="hidden" value="" name="tk"> -->
+							</fieldset>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- END HEADER ENTIDAD -->
+
+
+	<div class="u-menu">
+		<div class="container">
+			<div class='bloqueZona1  tipoDisplay'>
+<!--        <div class="row-offcanvas row-offcanvas-right">-->
+<nav
+    class="navbar navbar-default nav-menu  nxBlock nxBlockMegamenu nxBlockDesign1 nxBlockMegamenu1902 sign-menu">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+            data-target=".divNxBlockMegamenu1902">
+            <span class="sr-only">Desplegar navegaci&oacute;n</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse divNxBlockMegamenu1902 row">
+                <ul class="nav navbar-nav navbar-right megamenu">
+                        <li id="boton1902-1"                >
+                <a href='https://mintransporte.gov.co/' title='Inicio' >Inicio<span class='lang-gif'> <img src='info/mintransporte/media/galeria21997.gif' alt=''></span> </a>             </li>
+                        <li id="boton1902-2"                >
+                <a href='https://mintransporte.gov.co/4094' title='Transparencia y Acceso a la Información Pública' >Transparencia y Acceso a la Información Pública<span class='lang-gif'> <img src='info/mintransporte/media/galeria22012.gif' alt=''></span> </a>             </li>
+                        <li id="boton1902-3" data-accordion="#accordion"
+                class="dropdown dropdown-accordion ">
+                <a href="#"                      class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                    title="Atención y Servicios a la Ciudadanía">
+                    Atención y Servicios a la Ciudadanía                                            <span class='lang-gif'>
+                            <img src="info/mintransporte/media/galeria22013.gif" alt="A">
+                        </span>
+                                    </a>
+                
+                                <div class="dropdown-menu">
+                                        <div class="row megamenuContenedorGeneral">
+                                                <div
+                            class="row megamenuContenedorPrincipal col-md-12">
+                            <div  class='col-md-12 ' id='accordion3_0'> <div class='bloqueZona1  tipoDisplay'><div class="tabla1 tablaBloque2528  "
+    >
+    
+    <div class="contenido1">
+        <div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2529 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2529 ">
+                            <a class="section signal-32" 
+                href="https://mintransporte.gov.co/tramites/"
+                   title="Enlace a Tr&aacute;mites y Servicios">
+                     <strong>Tr&aacute;mites y Servicios</strong>                 </a>
+                                            <a class="section signal-33" 
+                href="https://mintransporte.gov.co/222"
+                   title="Enlace a Consulta de acceso a informaci&oacute;n p&uacute;blica y servicios en l&iacute;nea">
+                     <strong>Consulta de acceso a informaci&oacute;n p&uacute;blica y servicios en l&iacute;nea</strong>                 </a>
+                                            <a class="section signal-34" 
+                href="https://mintransporte.gov.co/209"
+                   title="Enlace a Canales de atenci&oacute;n y pida una cita">
+                     <strong>Canales de atenci&oacute;n y pida una cita</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2530 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2530 ">
+                            <a class="section signal-35" 
+                href="https://portalradicacion.mintransporte.gov.co"
+                   title="Enlace a Radicaci&oacute;n de PQRSD">
+                     <strong>Radicaci&oacute;n de PQRSD</strong>                 </a>
+                                            <a class="section signal-36" 
+                href="https://mintransporte.gov.co/11448"
+                   title="Enlace a Respuestas a peticiones imposibles de entregar y/o an&oacute;nimas">
+                     <strong>Respuestas a peticiones imposibles de entregar y/o an&oacute;nimas</strong>                 </a>
+                                            <a class="section signal-37" 
+                href="https://pagosenlineasirena.mintransporte.gov.co/sirenaweb/"
+                   title="Enlace a Pagos en l&iacute;nea">
+                     <strong>Pagos en l&iacute;nea</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2531 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2531 ">
+                            <a class="section signal-38" 
+                href="https://mintransporte.gov.co/documentos/998/protocolo-de-servicio-a-la-ciudadania/"
+                   title="Enlace a Protocolo de servicio al ciudadano">
+                     <strong>Protocolo de servicio al ciudadano</strong>                 </a>
+                                            <a class="section signal-39" 
+                href="https://mintransporte.gov.co/10492"
+                   title="Enlace a Caracterizaci&oacute;n de usuarios">
+                     <strong>Caracterizaci&oacute;n de usuarios</strong>                 </a>
+                                            <a class="section signal-40" 
+                href="https://mintransporte.gov.co/4548"
+                   title="Enlace a Informaci&oacute;n para la ciudadan&iacute;a">
+                     <strong>Informaci&oacute;n para la ciudadan&iacute;a</strong>                 </a>
+                                            <a class="section signal-41" 
+                href="https://mintransporte.gov.co/11909"
+                   title="Enlace a Encuesta de usabilidad para sedes electr&oacute;nicas">
+                     <strong>Encuesta de usabilidad para sedes electr&oacute;nicas</strong>                 </a>
+                                            <a class="section signal-42" 
+                href="https://mintransporte.gov.co/documentos/1000/documentos-de-interes-para-la-ciudadania/"
+                   title="Enlace a Documentos de inter&eacute;s para la ciudadan&iacute;a">
+                     <strong>Documentos de inter&eacute;s para la ciudadan&iacute;a</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+    </div>
+</div></div> </div>                        </div>
+                                                                    </div>
+                                    </div>
+                            </li>
+                        <li id="boton1902-4"                >
+                <a href='https://mintransporte.gov.co/3672' title='Participa' >Participa<span class='lang-gif'> <img src='info/mintransporte/media/galeria22014.gif' alt=''></span> </a>             </li>
+                        <li id="boton1902-5" data-accordion="#accordion"
+                class="dropdown dropdown-accordion ">
+                <a href="#"                      class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                    title="Ministerio">
+                    Ministerio                                            <span class='lang-gif'>
+                            <img src="info/mintransporte/media/galeria22015.gif" alt="A">
+                        </span>
+                                    </a>
+                
+                                <div class="dropdown-menu">
+                                        <div class="row megamenuContenedorGeneral">
+                                                <div
+                            class="row megamenuContenedorPrincipal col-md-12">
+                            <div  class='col-md-12 ' id='accordion5_0'> <div class='bloqueZona1  tipoDisplay'><div class="tabla1 tablaBloque2266  "
+    >
+    
+    <div class="contenido1">
+        <div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock1939 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces1939 ">
+                            <a class="section signal-8" 
+                href="https://mintransporte.gov.co/33"
+                   title="Enlace a &iquest;Qui&eacute;nes somos?">
+                     <strong>&iquest;Qui&eacute;nes somos?</strong>                 </a>
+                                            <a class="section signal-9" 
+                href="https://mintransporte.gov.co/11057"
+                   title="Enlace a La Ministra">
+                     <strong>La Ministra</strong>                 </a>
+                                            <a class="section signal-10" 
+                href="https://mintransporte.gov.co/184"
+                   title="Enlace a Viceministro de Transporte">
+                     <strong>Viceministro de Transporte</strong>                 </a>
+                                            <a class="section signal-11" 
+                href="https://mintransporte.gov.co/185"
+                   title="Enlace a Viceministro de Infraestructura">
+                     <strong>Viceministro de Infraestructura</strong>                 </a>
+                                            <a class="section signal-12" 
+                href="https://mintransporte.gov.co/186"
+                   title="Enlace a Secretaria General">
+                     <strong>Secretaria General</strong>                 </a>
+                                            <a class="section signal-13" 
+                href="https://mintransporte.gov.co/5191"
+                   title="Enlace a Entidades Adscritas">
+                     <strong>Entidades Adscritas</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock1948 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces1948 ">
+                            <a class="section signal-14" 
+                href="https://mintransporte.gov.co/37"
+                   title="Enlace a Organigrama">
+                     <strong>Organigrama</strong>                 </a>
+                                            <a class="section signal-15" 
+                href="https://mintransporte.gov.co/38"
+                   title="Enlace a Directorio y Dependencias del Ministerio">
+                     <strong>Directorio y Dependencias del Ministerio</strong>                 </a>
+                                            <a class="section signal-16" 
+                href="https://mintransporte.gov.co/287"
+                   title="Enlace a Asignaciones Salariales">
+                     <strong>Asignaciones Salariales</strong>                 </a>
+                                            <a class="section signal-17" 
+                href="https://mintransporte.gov.co/10750"
+                   title="Enlace a Asuntos Ambientales">
+                     <strong>Asuntos Ambientales</strong>                 </a>
+                                            <a class="section signal-18" 
+                href="https://mintransporte.gov.co/11734"
+                   title="Enlace a Asuntos internacionales">
+                     <strong>Asuntos internacionales</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2249 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2249 ">
+                            <a class="section signal-18" 
+                href="https://mintransporte.gov.co/346"
+                   title="Enlace a Bases de Datos">
+                     <strong>Bases de Datos</strong>                 </a>
+                                            <a class="section signal-19" 
+                href="https://mintransporte.gov.co/317"
+                   title="Enlace a Contrataci&oacute;n">
+                     <strong>Contrataci&oacute;n</strong>                 </a>
+                                            <a class="section signal-20" 
+                href="https://mintransporte.gov.co/../documentos.php?id=3"
+                   title="Enlace a Documentos Corporativos">
+                     <strong>Documentos Corporativos</strong>                 </a>
+                                            <a class="section signal-21" 
+                href="https://mintransporte.gov.co/5794"
+                   title="Enlace a Pol&iacute;tica de Integridad P&uacute;blica">
+                     <strong>Pol&iacute;tica de Integridad P&uacute;blica</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+    </div>
+</div></div> </div>                        </div>
+                                                                    </div>
+                                    </div>
+                            </li>
+                        <li id="boton1902-6" data-accordion="#accordion"
+                class="dropdown dropdown-accordion ">
+                <a href="#"                      class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                    title="Normatividad">
+                    Normatividad                                            <span class='lang-gif'>
+                            <img src="info/mintransporte/media/galeria22016.gif" alt="A">
+                        </span>
+                                    </a>
+                
+                                <div class="dropdown-menu">
+                                        <div class="row megamenuContenedorGeneral">
+                                                <div
+                            class="row megamenuContenedorPrincipal col-md-12">
+                            <div  class='col-md-12 ' id='accordion6_0'> <div class='bloqueZona1  tipoDisplay'><div class="tabla1 tablaBloque2268  "
+    >
+    
+    <div class="contenido1">
+        <div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2275 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2275 ">
+                            <a class="section signal-20" 
+                href="https://mintransporte.gov.co/publicaciones/11766/actos-administrativos/"
+                   title="Enlace a Actos Administrativos">
+                     <strong>Actos Administrativos</strong>                 </a>
+                                            <a class="section signal-21" 
+                href="https://mintransporte.gov.co/normatividad/proyectos/"
+                   title="Enlace a Proyectos de Actos Administrativos">
+                     <strong>Proyectos de Actos Administrativos</strong>                 </a>
+                                            <a class="section signal-22" 
+                href="https://mintransporte.gov.co/documentos/5/normatividad/genPag=1"
+                   title="Enlace a Notificaciones por Aviso">
+                     <strong>Notificaciones por Aviso</strong>                 </a>
+                                            <a class="section signal-23" 
+                href="https://mintransporte.gov.co/../documentos.php?id=198"
+                   title="Enlace a Notificaciones por procesos coactivos">
+                     <strong>Notificaciones por procesos coactivos</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2254 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2254 ">
+                            <a class="section signal-24" 
+                href="https://mintransporte.gov.co/publicaciones/9756/estados-y-edictos/"
+                   title="Enlace a Notificaciones Disciplinarias">
+                     <strong>Notificaciones Disciplinarias</strong>                 </a>
+                                            <a class="section signal-25" 
+                href="https://mintransporte.gov.co/11727"
+                   title="Enlace a Conceptos Jur&iacute;dicos Mintransporte">
+                     <strong>Conceptos Jur&iacute;dicos Mintransporte</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2255 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2255 ">
+                            <a class="section signal-26" 
+                href="https://mintransporte.gov.co/publicaciones/9556/decreto-1079-por-medio-del-cual-se-expide-el-decreto-unico-reglamentario-sectorial-del-sector/"
+                   title="Enlace a Decreto &Uacute;nico Reglamento - DUR">
+                     <strong>Decreto &Uacute;nico Reglamento - DUR</strong>                 </a>
+                                            <a class="section signal-26" 
+                href="https://mintransporte.gov.co/publicaciones/12081/resolucion-unica-compilatoria-en-materia-de-transito/"
+                   title="Enlace a Resoluci&oacute;n &Uacute;nica Compilatoria en materia de Tr&aacute;nsito  - RUCT">
+                     <strong>Resoluci&oacute;n &Uacute;nica Compilatoria en materia de Tr&aacute;nsito  - RUCT</strong>                 </a>
+                                            <a class="section signal-27" 
+                href="https://mintransporte.gov.co/publicaciones/12141/reglamentos-tecnicos/"
+                   title="Enlace a Reglamentos T&eacute;cnicos">
+                     <strong>Reglamentos T&eacute;cnicos</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+    </div>
+</div></div> </div>                        </div>
+                                                                    </div>
+                                    </div>
+                            </li>
+                        <li id="boton1902-7" data-accordion="#accordion"
+                class="dropdown dropdown-accordion ">
+                <a href="#"                      class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                    title="Prensa">
+                    Prensa                                            <span class='lang-gif'>
+                            <img src="info/mintransporte/media/galeria22017.gif" alt="A">
+                        </span>
+                                    </a>
+                
+                                <div class="dropdown-menu">
+                                        <div class="row megamenuContenedorGeneral">
+                                                <div
+                            class="row megamenuContenedorPrincipal col-md-12">
+                            <div  class='col-md-12 ' id='accordion7_0'> <div class='bloqueZona1  tipoDisplay'><div class="tabla1 tablaBloque2269  "
+    >
+    
+    <div class="contenido1">
+        <div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2256 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2256 ">
+                            <a class="section signal-27" 
+                href="https://mintransporte.gov.co/../publicaciones/noticias/?tema=323"
+                   title="Enlace a Noticias y comunicados">
+                     <strong>Noticias y comunicados</strong>                 </a>
+                                            <a class="section signal-28" target="_blank"
+                href="https://www.flickr.com/photos/mintransporteco/"
+                   title="Enlace a Galer&iacute;a de im&aacute;genes">
+                     <strong>Galer&iacute;a de im&aacute;genes</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2257 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2257 ">
+                            <a class="section signal-29" target="_blank"
+                href="http://www.youtube.com/user/Mintransporte"
+                   title="Enlace a Videos">
+                     <strong>Videos</strong>                 </a>
+                                            <a class="section signal-30" 
+                href="https://mintransporte.gov.co/calendario"
+                   title="Enlace a Agenda">
+                     <strong>Agenda</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+<div class="col-xs-12 col-md-4"><div class='bloqueZona1  tipoDisplay'><div class="nxBlock nxBlock2258 nxBlockDesign1 nxBlockEnlaces typeList ">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2258 ">
+                            <a class="section signal-31" 
+                href="https://mintransporte.gov.co/../publicaciones.php?id=5438"
+                   title="Enlace a Audios">
+                     <strong>Audios</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+</div></div>
+    </div>
+</div></div> </div>                        </div>
+                                                                    </div>
+                                    </div>
+                            </li>
+                    </ul>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        var estadoMenu = 0;
+        $(".dropdown").click(function() {
+            if ($(window).width() < 769 && estadoMenu == 0) {
+                estadoMenu = 1;
+                $(".collapseMenu").each(function() {
+                    //                                $(this).addClass('fa fa-chevron-right');
+                    var listado = $(this).data('object');
+                    $("#" + listado).addClass('collapse');
+                    $(this).attr("href", "#" + listado);
+                });
+                $(".megamenuPublicacionesEnlace").each(function() {
+                    var valorHref = $(this).data("href");
+                    $(this).prop("href", valorHref);
+                });
+                $('html, body').animate({
+                    scrollTop: $("#" + $(this).attr("id")).offset().top
+                });
+            } else if ($(window).width() < 769) {
+                $('html, body').animate({
+                    scrollTop: $("#" + $(this).attr("id")).offset().top
+                });
+            } else if ($(window).width() > 769 && estadoMenu == 1) {
+                estadoMenu = 0;
+                $(".megamenuPublicacionesEnlace").each(function() {
+                    var valorHref = $(this).data("href");
+                    $(this).attr("href", "#");
+                });
+                $(".collapseMenu").each(function() {
+                    $(this).removeClass('fa fa-chevron-right');
+                    var listado = $(this).data('object');
+                    $("#" + listado).removeClass('collapse');
+                    $(this).attr("href", $(this).data("url"));
+                });
+
+            }
+        });
+
+        $('.dropdown-accordion').on('show.bs.dropdown', function(event) {
+            var accordion = $(this).find($(this).data('accordion'));
+            accordion.find('.panel-collapse.in').collapse('hide');
+        }).on('click', 'a[data-toggle="collapse"]', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $($(this).data('parent')).find('.panel-collapse.in').collapse('hide');
+            $($(this).attr('href')).collapse('show');
+        });
+
+            }); // ready
+    </script>
+    </nav>
+<!--        </div>-->
+</div>
+		</div>
+	</div>
+<div id="google_translate_element" style="display:none;"></div>
+<script type="text/javascript">
+    // Genera un timestamp único basado en la fecha/hora actual
+    // En producción, esto cambiará cada vez que recargues la página,
+    // garantizando que nunca se cachee una versión vieja.
+    var version = new Date().getTime();
+    var js = document.createElement('script');
+    js.type = 'text/javascript';
+    js.async = true;
+    js.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&v=' + version;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(js, s);
+</script>
+	<!-- END MEGAMENU -->
+</div></div><div class="tabla1 tablaBloque2652  "
+    >
+    
+    <div class="contenido1">
+        
+    </div>
+</div>
+<!-- fin cache zona#1 (2026/04/24 09:18:35) -->
+</header>
+<!-- main content -->
+<section id="main-content" class="container cInterno">
+    <section class="row">
+        <section class="col-xs-12 col-md-9 main-content-info">
+			<div id="infoPrincipal">
+    <ul class="modPath breadcrumb">
+            <li class="modPath-home"><a href="https://mintransporte.gov.co/"><span class="fa fa-home"></span><span class="text">Inicio</span></a></li>
+    
+    
+    <li>Documentos</li>
+</ul>
+
+
+    <h1>Documentos</h1>
+
+    <div class="modMenuContainer row"><div class="col-xs-12">
+        <ul class="modMenu nav nav-pills pull-right">
+                            <li class="modMenu-question-circle">
+                    <a
+                            id="popAyuda"                      href="#"                              data-trigger="manual" data-toggle="popover"
+                             data-html="true" data-content='<h2>Ayuda de documentos </h2> <p>Acceda a un catálogo con todos los documentos relevantes de la entidad. Puede realizar la búsqueda del documento de su interés, consultarlo o descargarlo.</p>'
+                                                         data-placement="bottom"
+                                                        
+                                                                                                                                            >
+                                                                        <span class="fa fa-question-circle"></span>                        <span class="text">Ayuda</span>
+                    </a>
+                </li>
+                            <li class="modMenu-">
+                    <a
+                                                 href="#"                             
+                                                                                     title="Compartir" data-toggle="collapse"
+                            data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share"                                                         >
+                                                <span class="fa fa-share-alt"></span><span
+                                class="text">Compartir</span>                                                <span class="text"></span>
+                    </a>
+                </li>
+                            <li class="modMenu-">
+                    <a
+                                                 href="#"                             
+                                                         title="Buscar" data-toggle="collapse"
+                            data-target="#collapse-search" aria-expanded="false" aria-controls="collapse-search"                                                                                     >
+                        <span class="fa fa-search"></span><span
+                                class="text">Buscar</span>                                                                        <span class="text"></span>
+                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="col-xs-12 collapse-modMenu-container">
+                    <div class="collapse genmenu" id="collapse-share"><div class="panel panel-default share-panel">
+    <div class="panel-body">
+        <div class="share-title col-md-4 col-xs-12 text-center">
+            <h2 class="share-mod-title">Compartir en:</h2>
+        </div>
+                <div class="col-md-5 col-md-offset-2 col-xs-12 share-options">
+            <ul class="nav nav-pills pills-share ">
+                <li class="share-facebook" role="presentation"><a title="Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://mintransporte.gov.co/documentos/"><span class="fa fa-facebook fa-2x" aria-hidden="true"></span><span class="hidden">Facebook</span></a></li>
+                                <li class="share-twitter" role="presentation"><a title="Twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https://mintransporte.gov.co/documentos/"><span class="fa fa-twitter fa-2x" aria-hidden="true"></span><span class="hidden">Twitter</span></a></li>
+                <li class="share-linkedin" role="presentation"><a title="Linkedin" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://mintransporte.gov.co/documentos/"><span class="fa fa-linkedin fa-2x" aria-hidden="true"></span><span class="hidden">Linkedin</span></a></li>
+                <li class="share-whatsapp hidden-md hidden-lg" role="presentation"><a title="Whatsapp" target="_blank" href="whatsapp://send?text=https://mintransporte.gov.co/documentos/"><span class="fa fa-whatsapp fa-2x" aria-hidden="true"></span><span class="hidden">Whatsapp</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+                    <div class="collapse genmenu" id="collapse-search"><div class="panel panel-default search-panel">
+    <div class="panel-body">
+        <form action="https://mintransporte.gov.co/documentos/buscar/" class="form-horizontal" method="get" id="searchForm">
+            <fieldset>
+                <legend>Buscar</legend>
+                <label class="sr-only" for="as_q">Palabras...</label>
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <div class="entradas-de-texto-govco">
+                            <label for="input-basico-id">Palabras...</label>
+                            <input type="text" placeholder="Palabras..." name="q" id="as_q"
+                                   value=""
+                                   onkeypress="return ValidaLongitud(this, 150);">
+                        </div>
+                        <span class="input-group-btn mt-1">
+                            <button class="btn btn-primary" type="submit">
+                                <span class="fa fa-search" style="font-size:19px"></span>
+                                <span class="hidden">Buscar</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </fieldset>
+                    </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#searchForm').validate({
+        rules: {
+            q: {
+                minlength: 4,
+                maxlength: 150
+            }
+        }
+    });
+
+    function ValidaLongitud(campo, longitudMaxima) {
+        try {
+            if (campo.value.length > (longitudMaxima - 1))
+                return false;
+            else
+                return true;
+        } catch (e) {
+            return false;
+        }
+    }
+</script></div>
+            </div>
+
+<script>
+    $(document).ready(function () {
+                $("#popAyuda").click(function () {
+            $(this).popover('toggle');
+        });
+        
+        // evitar que al abrir o cerrar el collapse, se vaya el foco al inicio de la pagina
+        $('[data-toggle=collapse]').each(function () {
+            $(this).click(function (ev) {
+                ev.preventDefault();
+            });
+        });
+
+        $('body').on('click', function (e) {
+            $('[data-toggle=popover]').each(function () {
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+            $('.collapse').each(function () {
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.collapse').has(e.target).length === 0) {
+                    if ($(this).hasClass('no-autoclose-collapse')) return;
+                    $(this).collapse('hide');
+                }
+            });
+        });
+    });
+</script>
+
+</div>
+    <div class="modContent">
+        
+            <div class="msgError alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>Usted intenta consultar informaci&oacute;n que no existe en el sistema</div>
+
+    <div class="row">
+                    <div class="col-xs-12 col-md-4 pull-right">
+                
+<div id="resultsPerPage">
+<div class="row">
+<div class="CgenOrd pull-right col-xs-12 col-sm-10 col-md-8"><select class="form-control input-sm" id="paginate" name="paginate"><optgroup label="Resultados por página">
+	<option disabled hidden selected>Resultados por página</option>
+	<option value="10" selected >Mostrar 10 resultados</option>
+	<option value="25"  >Mostrar 25 resultados</option>
+	<option value="50"  >Mostrar 50 resultados</option>
+	<option value="100"  >Mostrar 100 resultados</option>
+</optgroup></select>
+</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#paginate").change(function(e) {
+			let params = new URLSearchParams(window.location.search);
+			let paginate = $("#paginate").val();
+			params.set("paginate", paginate);
+			params.delete("genPag");
+			let loc = window.location;
+			let pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf("/") + 1);
+			let url = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
+			let page = `${url}?${params}`;
+			if (url.substr(-1) === "?") {
+				page = `${url}${params}`;
+			}
+			window.location.href = page;
+		});
+	});
+</script>
+</div>
+            </div>
+            </div>
+    <br>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/304/asuntos-ambientales/" >
+                <span class="fa fa-folder"></span>  Asuntos Ambientales
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc"></p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/441/base-de-datos/" >
+                <span class="fa fa-folder"></span>  Base de Datos
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Base de Datos</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/1034/comunicados/" >
+                <span class="fa fa-folder"></span>  Comunicados
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Comunicados</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/1042/convocatoria-sgr/" >
+                <span class="fa fa-folder"></span>  Convocatoria SGR
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Convocatoria SGR</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/974/cooperacion-y-asuntos-internacionales/" >
+                <span class="fa fa-folder"></span>  Cooperaci&oacute;n y asuntos internacionales
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Cooperaci&oacute;n y asuntos internacionales</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/3/documentos-del-ministerio/" >
+                <span class="fa fa-folder"></span>  Documentos del Ministerio
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Documentos del Ministerio de Transporte</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/581/documentos-mipg/" >
+                <span class="fa fa-folder"></span>  Documentos MIPG
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Informaci&oacute;n relacionada al MIPG y cada una de sus dimensiones</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/790/el-registro-nacional-fluvial/" >
+                <span class="fa fa-folder"></span>  El Registro Nacional Fluvial
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">El Registro Nacional Fluvial</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/626/espacios-de-participacion/" >
+                <span class="fa fa-folder"></span>  Espacios de Participaci&oacute;n
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">Espacios de Participaci&oacute;n Ciudadana</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+            <h2>  
+            
+            <a href="https://mintransporte.gov.co/documentos/1033/fopat/" >
+                <span class="fa fa-folder"></span>  FOPAT
+            </a>
+        </h2>
+        <p class="pgel desc-cat-doc">FOPAT</p>
+        <div class="numeroDoc desc-cat-doc">
+            <!--N&uacute;mero de Documentos: <strong></strong>-->
+        </div>
+    
+    <div  id="genPaginate" class="col-xs-12"><div class="text-center"><nav><ul class="pagination"><li class="pag-hidden-component previous disabled"><a class="page-link"><span aria-hidden="true">Anterior</span><span class="sr-only">p&aacute;gina anterior</span></a></li><li class="active"><a class="page-link" href="https://mintransporte.gov.co/documentos/?genPag=1">1</a></li><li class="pag-hidden-component"><a class="page-link" href="https://mintransporte.gov.co/documentos/?genPag=2">2</a></li><li class="pag-hidden-component"><a class="page-link" href="https://mintransporte.gov.co/documentos/?genPag=3">3</a></li><li class="pag-hidden-component next"><a class="page-link" href="https://mintransporte.gov.co/documentos/?genPag=2"><span aria-hidden="true">Siguiente</span><span class="sr-only">p&aacute;gina siguiente</span></a></li></ul></nav></div></div>
+        
+        
+        <div class="footer-share-options">
+            <div class="col-lg-7 col-md-6 col-xs-2 share-options bottom-redes">
+                <ul class="nav nav-pills">
+                    <li class="share-print" role="presentation"><a title="Imprimir" href="javascript:window.print(); void 0;"><span class="fa fa-print fa-2x" aria-hidden="true"></span><span class="hidden">Imprimir</span></a></li>
+                                        <li class="share-print" role="presentation"><a id="bnt-play-vozme" onclick="init_vozme();" title="Leer contenido" href="javascript: void 0;"><span id="vozme" data-url-init="https://mintransporte.gov.co/loader.php?lServicio=Tools2&amp;lTipo=vozme&amp;lFuncion=init" data-url-main="https://mintransporte.gov.co/loader.php?lServicio=Tools2&amp;lTipo=vozme" data-token="899c0b06c40199116649df96cc4a8760" class="fa fa-volume-up fa-2x" aria-hidden="true"></span><span class="hidden">Leer contenido</span></a></li>
+                </ul>
+                <div id="block-play-vozme" style="display:none; padding-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </section>
+		<section  class="col-xs-12 col-md-3 main-content-sidebar" >
+			<!-- inicio cache zona#4 (2026/04/24 09:18:35) -->
+<div class="tabla1 tablaBloque2265  "
+    >
+    
+    <div class="contenido1">
+        <a class="twitter-timeline" data-height="435" data-link-color="#bb771f" href="https://twitter.com/MinTransporteCo?ref_src=twsrc%5Etfw">Tweets by MinTransporteCo</a> <script async src="https://platform.twitter.com/widgets.js" ></script>
+    </div>
+</div><div class="nxBlock nxBlock2263 nxBlockDesign1 nxBlockDynamic
+ nxBlockDynamicLayout6 banners-zone"
+     >
+    
+    <div class="defaultDynamic blockContent">
+            <div class="slider2263">
+                    <div  class="item slideL">
+                <a href="http://web.mintransporte.gov.co/jspui/"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Biblioteca Digital">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_205.webp" alt="Biblioteca Digital" title="Biblioteca Digital">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/descargar.php?idFile=16200"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Ruta de observaci&oacute;n">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_206.webp" alt="Ruta de observaci&oacute;n" title="Ruta de observaci&oacute;n">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="http://vut.mintransporte.gov.co/"
+                   target="_self"
+                   target="_blank" data-anim-hover=""
+                    title="Fotodeteccion">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_207.webp" alt="Fotodeteccion" title="Fotodeteccion">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/descargar.php?idFile=16041"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Cartilla">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_208.webp" alt="Cartilla" title="Cartilla">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://www.mintransporte.gov.co/asuntosambientales/"
+                   target="_self"
+                   target="_blank" data-anim-hover=""
+                    title="Asuntos Ambientales">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_209.webp" alt="Asuntos Ambientales" title="Asuntos Ambientales">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/publicaciones.php?id=4179"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Movilidad universal">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_210.webp" alt="Movilidad universal" title="Movilidad universal">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://www.mintransporte.gov.co/mintraninos/index.php"
+                   target="_self"
+                   target="_blank" data-anim-hover=""
+                    title="Informaci&oacute;n para ni&ntilde;os">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_211.webp" alt="Informaci&oacute;n para ni&ntilde;os" title="Informaci&oacute;n para ni&ntilde;os">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://proyectostipo.dnp.gov.co"
+                   target="_self"
+                   target="_blank" data-anim-hover=""
+                    title="Proyecto TIPO">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_212.webp" alt="Proyecto TIPO" title="Proyecto TIPO">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="http://daruma.mintransporte.gov.co/"
+                   target="_self"
+                   target="_blank" data-anim-hover=""
+                    title="Sistema Integrado de Gesti&oacute;n">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_213.webp" alt="Sistema Integrado de Gesti&oacute;n" title="Sistema Integrado de Gesti&oacute;n">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/publicaciones.php?id=5514"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Comunidades Indigenas">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_214.webp" alt="Comunidades Indigenas" title="Comunidades Indigenas">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/publicaciones.php?id=4834"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Proceso en curso">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_215.webp" alt="Proceso en curso" title="Proceso en curso">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/publicaciones.php?id=4222"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Transparencia en la Contrataci&oacute;n">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_216.webp" alt="Transparencia en la Contrataci&oacute;n" title="Transparencia en la Contrataci&oacute;n">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/descargar.php?idFile=13546"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Gu&iacute;a metodol&oacute;gica">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_218.webp" alt="Gu&iacute;a metodol&oacute;gica" title="Gu&iacute;a metodol&oacute;gica">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/descargar.php?idFile=14843"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Estudio de oferta y demanda">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_219.webp" alt="Estudio de oferta y demanda" title="Estudio de oferta y demanda">
+                                            </div>
+                </a>
+            </div>
+                    <div  class="item slideL">
+                <a href="https://mintransporte.gov.co/publicaciones.php?id=3422"
+                   target="_self"
+                    data-anim-hover=""
+                    title="Relator&iacute;a de Conceptos Jur&iacute;dicos">
+                    <div class="image">
+                        <img src="/mod/Bloques/img/200x200.gif" data-lazy="/info/mintransporte/media/galeria/thumbs/thgaleria_200X200_220.webp" alt="Relator&iacute;a de Conceptos Jur&iacute;dicos" title="Relator&iacute;a de Conceptos Jur&iacute;dicos">
+                                            </div>
+                </a>
+            </div>
+        
+    </div>
+
+    
+    <script>$(document).ready(function(){ $(".slider2263").slick({accessibility:false,fade:false,respondTo:"window",prevArrow:"<button type='button' class='slick-prev' title='Anterior'><span class='sr-only'>Anterior</span></button>",nextArrow:"<button type='button' class='slick-next' title='Siguiente'><span class='sr-only'>Siguiente</span></button>",lazyLoad:"ondemand",slidesToShow:1,slidesToScroll:3,arrows:false,dots:true,autoplay:true,autoplaySpeed:5000,dotsClass:"dotsDynamic",responsive:[{"breakpoint":768,"settings":{"rows":1,"slidesToScroll":1,"slidesToShow":2,"slidesPerRow":2,"swipeToSlide":true,"dotsClass":"slick-dots"}},{"breakpoint":480,"settings":{"rows":1,"slidesToScroll":1,"slidesToShow":1,"slidesPerRow":1,"swipeToSlide":true,"dotsClass":"slick-dots"}}]}).slickAnimation();$(".playslider2263").on("click", function(){var $pauseBtn = $(this);if ($pauseBtn.hasClass("fa-play")){$(".slider2263").slick("slickPlay");$pauseBtn.removeClass("fa-play");$pauseBtn.addClass("fa-pause");} else {$(".slider2263").slick("slickPause");$pauseBtn.removeClass("fa-pause");$pauseBtn.addClass("fa-play");}});});  $(".slider2263").on("beforeChange", function (){setTimeout(() => { slideTab(2263); }, "1000");});
+                         $( document ).ready(function() { slideTab(2263); });</script>
+
+    </div>
+</div>
+<div class="tabla1 tablaBloque2273 frase-zone "
+    >
+    
+    <div class="contenido1">
+        <div class='bloqueZona2  tipoDisplay'><div class="tabla1 tablaBloque2062  "
+    >
+    
+    <div class="contenido1">
+        <div id="fb-root">&nbsp;</div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v16.0&appId=148638765212954&autoLogAppEvents=1" nonce="5c1GS4HZ"></script>
+
+<div class="fb-page" data-adapt-container-width="true" data-height="350" data-hide-cover="false" data-href="https://www.facebook.com/MintransporteColombiaoficial" data-show-facepile="true" data-small-header="false" data-tabs="timeline" data-width="">
+<blockquote cite="https://www.facebook.com/MintransporteColombiaoficial" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MintransporteColombiaoficial">Ministerio de Transporte Colombia</a></blockquote>
+</div>
+    </div>
+</div></div>
+    </div>
+</div>
+<!-- fin cache zona#4 (2026/04/24 09:18:35) -->
+		</section>
+    </section>
+</section>
+<!-- end main content -->
+<footer>
+     <!-- inicio cache zona#3 (2026/04/24 09:18:35) -->
+<div class="tabla1 tablaBloque2114 container ministerio-zone hidden-xs "
+    >
+    
+    <div class="contenido1">
+        <div class="row">
+<div class="col-xs-12 col-sm-3">
+<div id="logoGob"><img alt="Logo portal 2" class="img-responsive" id="20676" src="/info/mintransporte/media/galeria20676.png" style="height:auto; margin:auto; max-width:150px; width:100%" title="Logo portal 2" /></div>
+</div>
+
+<div class="col-xs-12 col-sm-2">
+<div class="enlacesGel">
+<ul>
+	<li><a class="vinnetaPresidencia" href="https://www.presidencia.gov.co" target="_blank">Presidencia</a></li>
+	<li><a class="vinnetaVicepresidencia" href="http://www.vicepresidencia.gov.co" target="_blank">Vicepresidencia</a></li>
+	<li><a class="vinnetaMinjusticia" href="http://www.minjusticia.gov.co" target="_blank">MinJusticia</a></li>
+	<li><a class="vinnetaMindefensa" href="http://www.mindefensa.gov.co" target="_blank">MinDefensa</a></li>
+</ul>
+</div>
+</div>
+
+<div class="col-xs-12 col-sm-2">
+<div class="enlacesGel">
+<ul>
+	<li><a class="vinnetaMinrelaciones" href="http://www.cancilleria.gov.co" target="_blank">Canciller&iacute;a</a></li>
+	<li><a class="vinnetaMininterior" href="http://www.mininterior.gov.co/" target="_blank">MinInterior</a></li>
+	<li><a class="vinnetaMinhacienda" href="http://www.minhacienda.gov.co" target="_blank">MinHacienda</a></li>
+	<li><a class="vinnetaMinminas" href="https://www.minenergia.gov.co/" target="_blank">MinMinas</a></li>
+</ul>
+</div>
+</div>
+
+<div class="col-xs-12 col-sm-2">
+<div class="enlacesGel">
+<ul>
+	<li><a class="vinnetaMincomercio" href="http://www.mincit.gov.co/" target="_blank">MinComercio</a></li>
+	<li><a class="vinnetaMinagricultura" href="http://www.minagricultura.gov.co" target="_blank">MinAgricultura</a></li>
+	<li><a class="vinnetaMintransporte" href="https://www.mintransporte.gov.co" target="_blank">MinTransporte</a></li>
+	<li><a class="vinnetaMintrabajo" href="http://www.mintrabajo.gov.co" target="_blank">MinTrabajo</a></li>
+</ul>
+</div>
+</div>
+
+<div class="col-xs-12 col-sm-2">
+<div class="enlacesGel">
+<ul>
+	<li><a class="vinnetaMinambiente" href="http://www.minambiente.gov.co" target="_blank">MinAmbiente</a></li>
+	<li><a class="vinnetaMintic" href="http://www.mintic.gov.co" target="_blank">MinTIC</a></li>
+	<li><a class="vinnetaMincultura" href="http://www.mincultura.gov.co/Paginas/default.aspx" target="_blank">MinCultura</a></li>
+</ul>
+</div>
+</div>
+
+<div class="col-xs-12 col-sm-1">
+<div class="enlacesGel">
+<ul>
+	<li><a class="vinnetaMineducacion" href="http://www.mineducacion.gov.co" target="_blank">MinEducaci&oacute;n</a></li>
+	<li><a class="vinnetaMinvivienda" href="http://www.minvivienda.gov.co" target="_blank">MinVivienda</a></li>
+	<li><a class="vinnetaMinsalud" href="http://www.minsalud.gov.co" target="_blank">MinSalud</a></li>
+</ul>
+</div>
+</div>
+</div>
+    </div>
+</div><div class='bloqueZona3  tipoDisplay'><div class="nxBlock nxBlock2035 nxBlockDesign1 nxBlockLayout
+ bg-section-3 bottom"
+     >
+    
+    <div class="defaultLayout blockContent">
+            <div class="layout2035">
+        <div class="row">
+                            <div class="item col-lg-12 col-md-12 col-sm-12 col-xs-12 enlaces-bottom">
+                    <div class='bloqueZona3  tipoDisplay'><div class="tabla1 tablaBloque2123 container "
+    >
+    
+    <div class="contenido1">
+        <div class="row">
+<div class="col-md-6">
+<div class="section_header text-center" style="padding: 3rem 0">
+<h2><strong>Aplicativos Institucionales</strong></h2>
+</div>
+
+<div class="card-content">
+<ul>
+	<li><a href="/publicaciones.php?id=2648">Observatorio de Transporte de Carga por Carretera (OTCC)</a></li>
+	<li><a href="http://rndc.mintransporte.gov.co/MenuPrincipal/tabid/204/language/es-MX/Default.aspx?returnurl=%2fDefault.aspx" rel="noopener noreferrer" target="_blank">RNDC</a></li>
+	<li><a href="https://web.mintransporte.gov.co/rnf-zarpe/#/login">RNF - Registro Nacional Fluvial</a></li>
+	<li><a href="https://login.microsoftonline.com/login.srf?wa=wsignin1.0&amp;rpsnv=4&amp;ct=1479999659&amp;rver=6.7.6640.0&amp;wp=MCMBI&amp;wreply=https%3a%2f%2fportal.office.com%2flanding.aspx%3ftarget%3d%252fdefault.aspx&amp;lc=3082&amp;id=501392&amp;msafed=0&amp;client-request-id=6d2820dc-af7f-4f51-b64d-a7f2dbc27fbc" rel="noopener noreferrer" target="_blank">Correo Institucional</a></li>
+	<li><a href="https://gestiondocumental.mintransporte.gov.co/login.php" rel="noopener noreferrer" target="_blank">Orfeo</a></li>
+	<li><a href="/publicaciones.php?id=359">Sice TAC</a></li>
+	<li><a href="https://plc.mintransporte.gov.co/" rel="noopener noreferrer" target="_blank">Portal Log&iacute;stico de Colombia</a></li>
+	<li><a href="https://sinc.mintransporte.gov.co/" rel="noopener noreferrer" target="_blank">SINC</a></li>
+	<li><a href="https://rtpc.mintransporte.gov.co/sirtpc-web/Login" rel="noopener noreferrer" target="_blank">SIRTPC</a></li>
+	<li><a href="https://movilnet.mintransporte.gov.co/publicaciones/7960/ansemitra/" rel="noopener noreferrer" target="_blank">Ansemitra</a></li>
+	<li><a href="/descargar.php?idFile=101560">Manual de se&ntilde;alizaci&oacute;n</a></li>
+	<li><a href="https://mintransporte.maps.arcgis.com/apps/MapSeries/index.html?appid=d74d29d0484243bfbbcaf68ade9af521" rel="noopener noreferrer" target="_blank">Plan Vial Regional</a></li>
+	<li><a href="https://colpass.mintransporte.gov.co/" rel="noopener noreferrer" target="_blank">Peajes Electr&oacute;nicos</a></li>
+	<li><a href="https://gpi.mintransporte.gov.co/menuReports/list" rel="noopener noreferrer" target="_blank">Gestor de Proyectos de Infraestructura (GPI)</a></li>
+	<li><a href="https://www.mintransporte.gov.co/publicaciones/5775/plan-nacional-de-vias-para-la-integracion-regional/">Plan Nacional de V&iacute;as para la Integraci&oacute;n Regional</a></li>
+	<li>
+	<h1>Planes de Mejoramiento CGR</h1>
+	<a href="https://mintransporte.gov.co/publicaciones/1375/planes-de-mejoramiento-cgr/" target="_blank">Planes de Mejoramiento CGR</a></li>
+	<li><a href="https://web.mintransporte.gov.co/fssg" target="_blank">Gestor de Proyectos del Fondo de Subsidio de la Sobretasa a la Gasolina</a></li>
+</ul>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="section_header text-center" style="padding: 3rem 0">
+<h2><strong>Servicios al ciudadano</strong></h2>
+</div>
+
+<div class="card-content">
+<ul>
+	<li><a href="https://www.mintransporte.gov.co/publicaciones/357/directorios_ministerio_de_transporte/">Directorio Funcionarios MT</a></li>
+	<li><a href="/publicaciones.php?id=3672">Participaci&oacute;n ciudadana</a></li>
+	<li><a href="/publicaciones.php?id=4566">Peticiones, quejas y reclamos</a></li>
+	<li><a href="/publicaciones.php?id=227">Biblioteca</a></li>
+	<li><a href="/publicaciones.php?id=222">Tr&aacute;mites, servicios y consultas en l&iacute;nea</a></li>
+	<li><a href="https://www.datos.gov.co/" rel="noopener noreferrer" target="_blank">Datos Abiertos</a></li>
+	<li><a href="http://www.sic.gov.co/hora-legal-colombiana" rel="noopener noreferrer" target="_blank">Hora Legal</a></li>
+	<li><a href="/glosario">Glosario</a></li>
+	<li><a href="/publicaciones.php?id=400">Est&aacute;ndares</a></li>
+	<li><a href="/publicaciones.php?id=2583">Correo Notificaciones Judiciales</a></li>
+	<li><a href="/preguntas-frecuentes/">Preguntas y respuestas frecuentes</a></li>
+</ul>
+</div>
+</div>
+</div>
+    </div>
+</div></div>
+                </div>
+                    </div>
+    </div>
+    </div>
+</div>
+</div><div class="footer-block tabla2 tablaBloque2454 ">
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 footer-block_sede_principal">
+                    <h2 class="headline-l" >Ministerio de Transporte</h2>
+                    <div class="footer-block_logo visible-sm visible-xs">
+                        <img class="img-responsive " src="/info/mintransporte/media/bloquefooder2454.png"   alt="Ministerio de transporte"    >
+                    </div>
+                                            <h3 class="headline-l title_sede">Ministerio de Transporte Colombia</h3>
+                                        <p><strong>Direcci&oacute;n:</strong> Calle 24 # 60 - 50 Piso 9 Centro Comercial Gran Estaci&oacute;n II (Bogot&aacute;, D.C - Colombia)</p>
+
+<p><strong>C&oacute;digo postal:</strong>&nbsp;111321</p>
+
+<p><strong>Horario de Atenci&oacute;n: </strong>8:00 a.m. a 4:00 p.m.</p>
+
+<p><strong>Tel&eacute;fono de atenci&oacute;n:</strong> (+57 601) 3240800 opc. 1</p>
+
+<p><strong>L&iacute;nea gratuita:</strong> 01 8000 112042</p>
+
+<p><strong>L&iacute;nea de Transparencia:&nbsp;</strong>01 8000 110950</p>
+
+<p><strong>Horario de atenci&oacute;n canal telef&oacute;nico:</strong><br />
+Lunes a viernes&nbsp;de 7:00 a.m. - 5:00 p.m.</p>
+
+<p><strong>Canales oficiales de radicaci&oacute;n:&nbsp;</strong>Portal web <a href="https://portalradicacion.mintransporte.gov.co/">aqu&iacute;</a></p>
+
+<p><strong>Chat&nbsp;en L&iacute;nea:<strong> </strong></strong><a href="https://bpmmintransporte.ucontactcloud.com/WebChat/mintrasnportechat">aqu&iacute;</a></p>
+
+<p><strong><strong><strong>Correo institucional:</strong></strong></strong></p>
+
+<p>servicioalciudadano@mintransporte.gov.co<br />
+Horario correo electr&oacute;nico:&nbsp;Lunes a viernes</p>
+
+<p>de 7:00 a.m. a 4:30 p.m.</p>
+
+<p><strong><strong><strong>Notificaciones&nbsp;judiciales:&nbsp;</strong></strong></strong></p>
+
+<p>notificacionesjudiciales@mintransporte.gov.co</p>
+
+<p><strong><strong><strong>Ag&eacute;ndese para videollamada: </strong></strong></strong><a href="/publicaciones/8625/desde-cualquier-lugar-atenderemos-tus-inquietudes/">aqu&iacute;</a><br />
+Lunes a viernes de 7:30 a.m. - 4:30 p.m.</p>
+
+<p><strong>Ag&eacute;ndese para atenci&oacute;n presencial:&nbsp;</strong><a href="/publicaciones/10108/agendamiento-atencion-presencial/" style="text-transform: none;">aqu&iacute;</a><br />
+Lunes a viernes de 8:00 a.m. - 4:00 p.m.</p>
+
+<p><a href="/publicaciones/217/grupo-de-relacion-estado-ciudadano-microsite/" style="color: rgb(0, 72, 132); text-decoration-line: underline; text-transform: none;">M&aacute;s Informaci&oacute;n canales de atenci&oacute;n.</a></p>
+
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 footer-block_logo visible-md visible-lg">
+                    <img class="img-responsive " src="/info/mintransporte/media/bloquefooder2454.png"   alt="Ministerio de transporte"  >
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 social_links">
+                                    <ul class="list-unstyle lista-enlaces">
+                                    
+                                                <li style="display: inline;">
+                            <a class="section fa fa-facebook" target="_blank" href="https://www.facebook.com/MintransporteColombiaoficial" title="">
+                                <strong class="list_enlace_text"> MintransporteColombiaoficial</strong>
+                            </a>
+                        </li>
+                                                            
+                                                <li style="display: inline;">
+                            <a class="section fa fa-instagram" target="_blank" href="https://www.instagram.com/mintransporteco/" title="Instagram">
+                                <strong class="list_enlace_text"> mintransporteco</strong>
+                            </a>
+                        </li>
+                                                            
+                                                <li style="display: inline;">
+                            <a class="section fa fa-twitter" target="_blank" href="https://twitter.com/MinTransporteCo" title="Instagram">
+                                <strong class="list_enlace_text"> MinTransporteCo</strong>
+                            </a>
+                        </li>
+                                                            
+                                                <li style="display: inline;">
+                            <a class="section fa fa-youtube-play" target="_blank" href="https://www.youtube.com/user/Mintransporte" title="YouTube">
+                                <strong class="list_enlace_text"> Mintransporte</strong>
+                            </a>
+                        </li>
+                                                            
+                                                <li style="display: inline;">
+                            <a class="section fa fa-tiktok" target="_blank" href="https://www.tiktok.com/@mintransporte?_t=8bsRmMQD7zi&amp;_r=1" title="YouTube">
+                                <strong class="list_enlace_text"> @mintransporte</strong>
+                            </a>
+                        </li>
+                                                                    </ul>
+                                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footer-block_sedes">
+                    <div class="contenido1">
+                        <div class="row">
+                                                    </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bloque_footer_enlaces text-left">
+
+                    <ul class="list-group list-group-horizontal">
+                         
+                            <li class="list-group-item">
+                                <a class="section" href="/publicaciones.php?id=165" target="_self">
+                                    Pol&iacute;ticas de privacidad
+                                </a>
+                            </li>
+                         
+                            <li class="list-group-item">
+                                <a class="section" href="/publicaciones.php?id=438" target="_self">
+                                    T&eacute;rminos de uso
+                                </a>
+                            </li>
+                         
+                            <li class="list-group-item">
+                                <a class="section" href="/publicaciones.php?id=5482" target="_self">
+                                    Certificaciones de calidad
+                                </a>
+                            </li>
+                         
+                            <li class="list-group-item">
+                                <a class="section" href="https://movilnet.mintransporte.gov.co/" target="_blank">
+                                    Movilnet
+                                </a>
+                            </li>
+                         
+                            <li class="list-group-item">
+                                <a class="section" href="/admin" target="_self">
+                                    Ingreso al sistema
+                                </a>
+                            </li>
+                         
+                            <li class="list-group-item">
+                                <a class="section" href="/5332" target="_self">
+                                    Mapa del sitio
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copywrite">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <a href="https://www.gov.co/" title="Gobierno de Colombia" target="_blank">
+                        <img class="img-responsive logoGovCo gov" src="/mod/Bloques/img/logo-govco-footer-v2.svg" id="img-govco" alt="Gobierno de Colombia">
+                    </a>
+                    <span class="separator"></span>
+                    <a href="https://www.colombia.co/" title="Marca País Colombia" target="_blank">
+                        <img class="img-responsive logoGovCo marca" src="/mod/Bloques/img/logo-colombia.svg" id="img-marcacol" alt="Marca País Colombia">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="nxBlock nxBlock2388 nxBlockDesign1 nxBlockEnlaces typeList float-buttons-social">
+        <div class="blockContent defaultEnlaces ">
+        <div class="constructEnlaces2388 ">
+                            <a class="section fa fa-facebook-f enl-fb" target="_blank"
+                href="https://www.facebook.com/MintransporteColombiaoficial"
+                   title="Enlace a Facebook">
+                     <strong>Facebook</strong>                 </a>
+                                            <a class="section fa fa-twitter enl-tw" target="_blank"
+                href="https://twitter.com/MinTransporteCo"
+                   title="Enlace a Twitter">
+                     <strong>Twitter</strong>                 </a>
+                                            <a class="section fa fa-youtube enl-yt" target="_blank"
+                href="https://www.youtube.com/user/Mintransporte"
+                   title="Enlace a Youtube">
+                     <strong>Youtube</strong>                 </a>
+                                            <a class="section fa fa-instagram enl-in" target="_blank"
+                href="https://www.instagram.com/mintransporteco/"
+                   title="Enlace a Instagram">
+                     <strong>Instagram</strong>                 </a>
+                                            <a class="section fa fa-flickr enl-fl" target="_blank"
+                href="https://www.flickr.com/photos/mintransporteco/"
+                   title="Enlace a Flickr">
+                     <strong>Flickr</strong>                 </a>
+                                            <a class="section fa-tiktok" target="_blank"
+                href="https://www.tiktok.com/@mintransporte?_t=8bsRmMQD7zi&amp;_r=1"
+                   title="Enlace a TikTok">
+                     <strong>TikTok</strong>                 </a>
+                                    </div>
+    </div>
+</div>
+<!-- BARRA ACCESIBILIDAD -->
+
+
+ 
+    <div class="id-gov-accessibility-2465 block block--gov-accessibility open_panel-accessibility" id="id-gov-accessibility-2465">
+            <!-- <div class="box-button_panel pd-top-lv1 pd-bottom-lv1" data-key="2465">
+                <span id="button_panel-2465"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+            </div> -->
+            <div class="block-options navbar-expanded">
+                                    <button class="contrast-ref btnAccesibilidad__contraste_new" >
+                        <span class="iconnx-contrast-n" aria-hidden="true"></span>
+                        <span class="title-option"> Contraste </span>
+                    </button>
+                                                    <button class="contrast-ref btnAccesibilidad__texto" >
+                        <span class="iconnx-contrast-p" aria-hidden="true"></span>
+                        <span class="title-option"> Solo texto </span>
+                    </button>
+                                                    <button class="min-fontsize btnAccesibilidad__minFontSize" >
+                        <span class="iconnx-less-size" aria-hidden="true"></span>
+                        <span class="title-option align-middle"> Reducir letra </span>
+                    </button>
+                    <button class="max-fontsize btnAccesibilidad__maxFontSize" >
+                    <span class="iconnx-more-size" aria-hidden="true"></span>
+                        <span class="title-option align-middle"> Aumentar letra </span>
+                    </button>
+                                                    <a target="_blank" href="https://centroderelevo.gov.co/632/w3-channel.html">
+                        <span class="iconnx-relief-n" aria-hidden="true"></span>
+                        <span class="title-option align-middle"> Centro de relevo </span>
+                    </a>
+                                                                
+            </div>
+        </div>
+    
+
+        
+    
+
+
+
+<!-- BOTON SUBIR -->
+    <div class="scroll-to-top show-scrollTop">
+
+        <button id="btnTopPage" class="scroll-to-topButton">
+            <span class="iconnx-arrow-circle-up btn-access-up">
+            </span>
+            <span class="label-button-star-up"> Volver arriba </span>
+        </button>
+    </div>
+<div class="tabla1 tablaBloque2661  "
+    >
+    
+    <div class="contenido1">
+        <script>
+  $(".content-home").attr("id", "content-home");
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Crear contenedor principal
+    const skipContainer = document.createElement("div");
+    skipContainer.className = "skip-container";
+
+    const innerContainer = document.createElement("div");
+    innerContainer.className = "container";
+
+    // Crear enlace
+    const skipLink = document.createElement("a");
+    skipLink.textContent = "Saltar al contenido";
+    skipLink.className = "skip-link";
+
+    // Definir destino según body
+    let targetId = document.body.classList.contains("dPrincipal")
+      ? "content-home"
+      : "main-content";
+
+    skipLink.href = "#" + targetId;
+
+    // Al hacer click/Enter, mover foco al destino
+    skipLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.setAttribute("tabindex", "-1"); // Permite recibir foco
+        target.focus();
+      }
+    });
+
+    // Insertar estructura
+    innerContainer.appendChild(skipLink);
+    skipContainer.appendChild(innerContainer);
+    document.body.insertBefore(skipContainer, document.body.firstChild);
+  });
+</script>
+
+<style>
+  .skip-container {
+    background-color: #0943b5;
+  }
+  .skip-link {
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    position: absolute;
+    left: -999px;
+  }
+  .skip-link:focus {
+    position: static;
+    margin: 0.5rem 0;
+    outline: 2px solid #fff !important;
+  }
+</style>
+    </div>
+</div><div class="tabla1 tablaBloque2439  "
+    >
+    
+    <div class="contenido1">
+        <meta name="facebook-domain-verification" content="ijugpmtt4xce8ltolm5lgu0a90a4nu" itemprop="Facebook" />
+    </div>
+</div><div class="tabla1 tablaBloque2329  "
+    >
+    
+    <div class="contenido1">
+        <!-- <!-- Global site tag (gtag.js) - Google Analytics ->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-4024609-49"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-4024609-49');
+</script>-->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1RRFL723T4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1RRFL723T4');
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H1QST03VMS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H1QST03VMS');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MZF6M6C2');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZF6M6C2"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    </div>
+</div><div class="tabla1 tablaBloque2326  "
+    >
+    
+    <div class="contenido1">
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130669467-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'UA-130669467-1');
+</script>
+    </div>
+</div><div class="tabla1 tablaBloque2450  "
+    >
+    
+    <div class="contenido1">
+        <style type="text/css">.floating-list {
+    padding-left: 0 !important;
+    list-style: none !important;
+    margin-bottom: 0 !important;
+    position: fixed;
+    z-index: 99;
+    bottom: 8rem;
+    right: 1rem;
+  }
+
+  .floating-list .link-img img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+
+  .floating-list .link-img:hover img,
+  .floating-list .link-img:focus img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.71));
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.71));
+  }
+</style>
+<ul class="floating-list"><!-- <li><a class="link-img" href="https://api.whatsapp.com/send/?phone=573209611208&amp;text&amp;type=phone_number&amp;app_absent=0" rel="noopener noreferrer" target="_blank">&nbsp;</a></li>
+	<li><a class="link-img" href="https://mintransportebpm.ucontactcloud.com/WebChat/load.html" rel="noopener noreferrer" target="_blank"><img alt="Chat" longdesc="Chat" src="/info/mintransporte/media/galeria19913.png" style="height:80px; width:80px" title="Escríbenos" /> </a></li>
+	<li><a class="link-img" href="https://api.whatsapp.com/send/?phone=573209611208&amp;text&amp;type=phone_number&amp;app_absent=0" rel="noopener noreferrer" target="_blank"><img alt="WhatsApp" longdesc="WhatsApp" src="/info/mintransporte/media/galeria19912.png" style="height:80px; width:80px" title="Comunícate por WhatsApp" /> </a></li> -->
+</ul>
+
+<ul class="floating-list">
+</ul>
+
+<ul class="floating-list"><br />
+	<li style="text-align: right"><br />
+	<a class="link-img" href="https://outlook.office365.com/book/MinisteriodeTransporte@mintransporte.gov.co/s/nt_QCm1B20ylQYTakYcSkw2" rel="noopener noreferrer" target="_blank"><img alt="Videollamada con servicio de interpretación en Lengua de Señas Colombiana" id="20023" longdesc="Videollamada con servicio de interpretación en Lengua de Señas Colombiana" src="/info/mintransporte/media/galeria20023.png" style="height:55px; width:55px" title="Videollamada con servicio de interpretación en Lengua de Señas Colombiana" /></a></li>
+	<li style="text-align: right">&nbsp;</li>
+	<li style="text-align: right"><a href="https://wa.me/+573206408930" target="_blank"><img alt="Atención por WhatsApp" id="20650" longdesc="Atención por WhatsApp" src="/info/mintransporte/media/galeria20650.png" style="height:55px; text-align:right; width:55px" title="Whatsapp" /></a></li>
+</ul>
+    </div>
+</div><div class="tabla1 tablaBloque2327  "
+    >
+    
+    <div class="contenido1">
+        <script id="Microsoft_Omnichannel_LCWidget" src="https://oc-cdn-public-sam.azureedge.net/livechatwidget/scripts/LiveChatBootstrapper.js" data-app-id="4e90c2fd-ca52-495e-a9f6-30044ef729ee" data-lcw-version="prod" data-org-id="77235ee9-f291-4387-9cc7-f20b5c386935" data-org-url="https://m-77235ee9-f291-4387-9cc7-f20b5c386935.br.omnichannelengagementhub.com"></script>
+    </div>
+</div><div class="tabla1 tablaBloque2461  "
+    >
+    
+    <div class="contenido1">
+        <style>
+  .uSlider .defaultDynamic .slick-next,
+  .slick-next {
+    right: 5.2rem;
+  }
+  .uSlider .defaultDynamic .slick-prev,
+  .slick-prev {
+    left: 5.2rem;
+  }
+  .float-buttons-social {
+    top: 55vh;
+  }
+  .dModPublicaciones .btn,
+  .dModPublicaciones .c-btn {
+    min-width: 5em;
+  }
+  .slider_banner.icon-style.full-width .item a .image {
+    width: 100%;
+    height: 100px;
+  }
+  .slider_banner.icon-style.full-width .item a .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .slider_banner.icon-style.full-width .item a:hover .image img,
+  .slider_banner.icon-style.full-width .item a:focus .image img {
+    transform: scale(1);
+  }
+  .slider_banner.icon-style.full-width .item a:hover .rollover-box title,
+  .slider_banner.icon-style.full-width .item a:focus .rollover-box title {
+    color: #FFFFFF;
+  }
+  .slider_banner.icon-style.full-width .new-tools-box {
+    display: none !important;
+  }
+
+  /* Cambio de tamaño de logo */
+  .logo-x2 .header_entidad .row .logo_entidad a.logo_horizontal img {
+    max-height: 84px !important;
+  }
+  @media screen and (max-width: 767px) {
+    .header-block.logo-x2 .header_entidad .buscar_entidad {
+      top: 169px;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .header-block.logo-x2 .header_entidad .buscar_entidad {
+      top: 150px;
+    }
+  }
+  /* Clase nueva para ajuste de vista de documentos buscados */
+  .documentos .pdf > a {
+    background: url(/mod/Documentos/img/pdf.png) center no-repeat;
+  }
+  .infoDocumentos-fix {
+    display: block !important;
+  }
+</style>
+<script>
+  $(document).ready(function () {
+    if ($("body").hasClass("dModDocumentos")) {
+      $(".infoDocumentos").has(".col-xs-12").addClass("infoDocumentos-fix");
+    }
+  });
+</script>
+    </div>
+</div><div class="tabla1 tablaBloque2480  "
+    >
+    
+    <div class="contenido1">
+        <style>
+    /* Oculta los bloques de anuncios de Google por completo */
+    .gsc-adBlock, 
+    .gsc-adBlockVertical, 
+    #master-1, 
+    #master-a-1,
+    .gsc-adBlockInvisible {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+        overflow: hidden !important;
+    }
+div.clicktrackedAd_js { display: none; }
+    header .u-menu .sign-menu ul.lista-enlaces>li>a[class*=signal]:hover:after{
+        left: calc(50% - 60px);
+    }
+    header .u-menu .sign-menu ul.lista-enlaces>li>a[class*=signal]:hover:before{
+        left: 50% !important;
+    }
+        .header-block .u-menu .nav-menu ul.megamenu>li>a {
+            height: auto !important;
+         }
+	.publication-container a {
+		color: #dc7240;
+	}
+	/* ESTILOS MOBILE CORREGIDOS */
+	@media only screen and (max-width: 600px) {
+		body {
+			overflow-x: hidden !important;
+		}
+	/* Cajón de la imagen del slider */
+	.dPrincipal .slider_main .item a .image {
+		width: 100%;
+		height: auto;
+		max-height: 100%;
+		display: flex;
+	}
+	/* Flechas del slider */
+	.uSlider .defaultDynamic .slick-prev, .slick-prev {
+		left: 0;
+	}
+	/* Pie de foto de cada slide*/
+	.dPrincipal .slider_main .item .new-tools-box {
+		background: #dc7240;
+		min-height: auto;
+	}
+	.dPrincipal .slider_main .item .new-tools-box .title {
+		width: auto;
+	}
+	.dPrincipal .slider_main .item .new-tools-box .title p {
+		font-weight: 400;
+		font-size: .5em;
+		text-align: center;
+	}
+	/* Botón pausar slide */
+	.uSlider .buttons {
+		position: absolute;
+		left: 1em;
+		bottom: -2.5em;
+		z-index: 3;
+	}
+	/* Paginador de slides */
+	.slick-dots {
+		display: none;
+	}
+	/* Barra de accesibilidad */
+	.block--gov-accessibility {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	/*Botón volver arriba*/
+	.scroll-to-top {
+		left: 5px !important;
+	}
+	.scroll-to-top button .label-button-star-up {
+		display: none;
+	}
+	}
+	@media screen and (max-width: 992px) {
+		.dPrincipal .slider_main .slick-next {
+			right: inherit;
+			left: 88% !important;
+		}
+	}
+	/** AJUSTE NUEVO OPCIÓN SLIDER ICONOS **/
+	.slider_banner.no-date .new-tools-box {
+		display: none !important;
+	}
+	.slider_banner.icon-style.nxBlockDynamicLayout4 .dynamicStyle2 .item a.content-box+a.content-box {
+		position: relative;
+		top: 0;
+		margin: 1rem 0 0 0;
+		height: auto;
+		background: none;
+	}
+	.slider_banner.icon-style.nxBlockDynamicLayout4 .dynamicStyle2 .item a.content-box+a.content-box:hover,
+	.slider_banner.icon-style.nxBlockDynamicLayout4 .dynamicStyle2 .item a.content-box:hover+a.content-box {
+		color: #FFFFFF;
+		background-color: #dc7240;
+	}
+	.slider_banner.icon-style.nxBlockDynamicLayout4 .dynamicStyle2 .item a.content-box+a.content-box:hover .title,
+	.slider_banner.icon-style.nxBlockDynamicLayout4 .dynamicStyle2 .item a.content-box:hover+a.content-box .title {
+		color: #FFFFFF;
+	}
+	.slider-institucional .dynamicStyle2 .image {
+		width: 100%;
+		height: 100%;
+		aspect-ratio: 1/1;
+	}
+	/*.slider-institucional .image img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}*/
+	.slider-institucional .dynamicStyle2 .item {
+		position: relative;
+	}
+	.slider-institucional .dynamicStyle2 .item .content-box+.content-box {
+		position: absolute;
+		top: 0;
+		z-index: 2;
+		width: calc(100% - 2rem);
+		height: 100%;
+		border-radius: 0 0 10px 10px;
+	}
+	/* ESTILOS PARA NOTICIA DESTACADA DEL HOME */
+	.nxBlock2456 .item a {
+		display: flex !important;
+		flex-direction: column !important;
+	}
+	.nxBlock2456 .item a .image {
+		width: 100% !important;
+		height: 180px !important;
+	}
+	.nxBlock2456 .item a .rollover-box {
+		width: 100% !important;
+		padding-top: 10px !important;
+	}
+	.nxBlock2456 .item a.new-tools-box {
+		display: none !important;
+	}
+	/* ESTILO PARA PIES DE FOTO FOTOS INTERNAS */
+	.dModPublicaciones p.resumenImgint {
+		background-color: #f9f9f9;
+		padding: 0 0.5em 2em 0.5em;
+		font-style: italic;
+		text-align: center;
+		font-size: .8rem;
+	}
+	/* ESTILO PARA TAMAÑO DE TABS REDES SOCIALES HOME */
+	.tablaBloqueTabs2469 .ui-tabs .ui-tabs-nav li a {
+		font-size: .8em !important;
+	}
+
+/* ESTILOS PARA ELIMINAR PRIMER Y TERCER H1 EN TODAS PÁGINAS INTERNAS - ERROR QUE TIENE EL TEMPLATE*/
+
+#section-title h1:nth-of-type(1),
+#section-title h1:nth-of-type(3) {
+display: none;
+}
+</style>
+<style>
+.header-block .u-menu .nav-menu .dropdown-menu a {
+   
+    background: none !important;
+}
+@media screen and (min-width: 992px) {
+    .dPrincipal .slider_main .item a .image {
+        height: 100% !important;
+    }
+.defaultDynamic .slick-prev, .slick-prev {
+    left: -38px;
+}
+.defaultDynamic .slick-next, .slick-next {
+    right: -28px;
+}
+</style>
+    </div>
+</div><div class="cookies-block tabla1 tablaBloque2532 ">
+    <h2 class="cookies__titulo">&iquest;Aceptas nuestras Cookies?</h2>
+    <div  class="cookies__texto">
+          <p>Usamos cookies para mejorar tu experiencia en la web.</p>
+
+<p>Consultar <a href="https://mintransporte.gov.co/publicaciones/165/politicas-de-privacidad/">aqu&iacute; nuestras pol&iacute;ticas de privacidad y condiciones de uso.</a></p>
+
+<p><iframe id="_pericles_content_iframe" style="position: absolute; top: -99px; left: 0px; width: 50px; height: 26px; background: transparent; overflow: visible; margin-top: -30px; transition: top 2s ease-in-out 0s; z-index: 2147483647; border: none; padding: 0px;"></iframe></p>
+
+<p><iframe id="_pericles_content_iframe" style="position: absolute; top: -99px; left: 0px; width: 50px; height: 26px; background: transparent; overflow: visible; margin-top: -30px; transition: top 2s ease-in-out 0s; z-index: 2147483647; border: none; padding: 0px;"></iframe></p>
+    
+    </div>
+    <div class="cookies__botones">
+                    <button class="btn btn-outline-primary cookies__boton cookies__boton--si">Aceptar</button>
+            <button class="btn btn-outline-primary cookies__boton cookies__boton__no__principal">Denegar</button>
+            <button data-toggle="modal" data-target="#modalConfigurarCookie" class="btn btn-outline-primary cookies__boton cookies__boton--configurar">Configuraci&oacute;n de cookies</button>  
+            </div>
+    
+
+        <!-- No borrar, aquí se generarán todas las etiquetas <script> si acepta el usuario -->
+        <div id="nuevosScripts"> </div>
+        <div id="cookieDesplegar" data-url="null"></div>
+
+
+                <!-- Modal configuración  -->
+        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalConfigurarCookie" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title" id="modaltitleConfiguracion">Configuraci&oacute;n Cookies</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <h2 id="titulo-cookie">Centro de preferencia de la privacidad</h2>
+                        <div id="descripcion-cookie">
+                            <p>Al momento de visitar cualquier sitio web, &eacute;stos podr&iacute;an obtener o guardar informaci&oacute;n en su navegador mediante el uso de cookies. Las cookies pueden recolectar informaci&oacute;n relacionada con su dispositivo y sus preferencias, y se usan principalmente para que el sitio funcione seg&uacute;n lo esperado. Por lo general, la informaci&oacute;n que recolectan las cookies no lo identifica directamente, pero pueden proporcionarle una experiencia web m&aacute;s personalizada. Por respeto a su derecho a la privacidad, usted tiene la opci&oacute;n de rechazar el uso de ciertas cookies. Haga clic en los encabezados de cada categor&iacute;a para saber m&aacute;s y cambiar nuestras configuraciones predeterminadas. Tenga en cuenta que el bloqueo de algunos tipos de cookies puede afectar su experiencia en el sitio y los servicios que podemos ofrecer.</p>
+
+                        </div>
+                        <br>
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <!-- cookies estrictamente necesarias -->
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneC1">Cookies estrictamente necesarias</a>
+                                    </h3>
+                                </div>
+                                <div id="collapseOneC1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                               
+                                                    <p>Estas cookies son necesarias para que el sitio web funciones correctamente, Usualmente est&aacute;s configuradas para realizar acciones hechas por usted y pueda recibir servicios, como lo son iniciar sesi&oacute;n en el sitio, o llenar formularios. Usted puede configurar su navegador para bloquear la presencia de estas cookies, pero algunas partes del sitio web no funcionar&aacute;n.</p>
+ 
+                                                
+                                            </div>
+                                            <div class="cookies__botones_und col-md-4">
+                                                <span>Activas siempre</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- cookies de rendimiento -->
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneC2">Cookies de estad&iacute;stica</a>
+                                    </h3>
+                                </div>
+                                <div id="collapseOneC2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                
+                                                <p>Estas cookies nos ayudan a comprender como interact&uacute;an los visitantes con las p&aacute;ginas web reuniendo y proporcionando informaci&oacute;n de forma an&oacute;nima.</p>
+ 
+                                                
+                                            </div>
+                                            <div class="cookies__botones_und col-md-4">
+                                                <div class="onoffswitch switchC2">
+                                                    <input type="checkbox" value="aqui" name="onoffswitch2" class="onoffswitch-checkbox" id="onoffswitch2" checked >
+                                                    <label class="onoffswitch-label" for="onoffswitch2">
+                                                        <span class="visually-hidden">Acepto las cookies de estadistica</span>    
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- cookies Preferencia -->
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneC3">Cookies de preferencia</a>
+                                    </h3>
+                                </div>
+                                <div id="collapseOneC3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                
+                                                <p>Estas cookies permiten que el sitio ofrezca mejor funcionalidad y personalizaci&oacute;n, Estas pueden ser establecidas por nosotros o por terceros cuyos servicios hemos agregado a nuestras p&aacute;ginas.</p>
+ 
+                                                
+                                            </div>
+                                            <div class="cookies__botones_und col-md-4">
+                                                <div class="onoffswitch switchC3">
+                                                    <input type="checkbox"  name="onoffswitch3" class="onoffswitch-checkbox " id="onoffswitch3" checked>
+                                                    <label class="onoffswitch-label" for="onoffswitch3">
+                                                        <span class="visually-hidden">Acepto las cookies de preferencia</span>
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- cookies publicitarias -->
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneC4">Cookies publicitarias</a>
+                                    </h3>
+                                </div>
+                                <div id="collapseOneC4" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                
+                                                <p>Estas cookies recopilan informaci&oacute;n sobre su comportamiento de navegaci&oacute;n para mostrar anuncios de su inter&eacute;s, revisamos cuando fue la &uacute;ltima vez que visito nuestro sitio web y que actividades realizo en el sitio web.</p>
+ 
+                                                
+                                            </div>
+                                            <div class="cookies__botones_und col-md-4">
+                                                <div class="onoffswitch switchC4">
+                                                    <input type="checkbox"  name="onoffswitch4" class="onoffswitch-checkbox " id="onoffswitch4" checked>
+                                                    <label class="onoffswitch-label" for="onoffswitch4">
+                                                        <span class="visually-hidden">Acepto las cookies de publicitaria</span>
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-primary cookies__boton cookies__boton--no-modal">Denegar</button>
+                        <button type="button" class="btn btn-primary cookies__boton cookies__boton--si-modal">Aceptar configuraci&oacute;n</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dataCookie" data-presentacion=""> </div>
+</div>
+
+<!-- fin cache zona#3 (2026/04/24 09:18:35) -->
+    <section class="powered text-right">
+        <a href="http://nexura.com" target="blank" class="white-logo">Powered by Nexura</a>
+    </section>
+</footer>
+<script src="/info/mintransporte/web/portal/js/functions.js"></script>
+<script>
+   $(function() {
+      if( $('h1').length && $('ul.breadcrumb').length) {
+        $("#main-content").before('<section id="section-title"><section class="container"></section></section>');
+        $("h1").appendTo("#section-title .container");
+        $("ul.breadcrumb").appendTo("#section-title .container");
+      }
+       $("body").addClass("dInterno")
+    });
+</script>
+            <script>
+                $(document).ready(function () {
+
+                    jQuery.validator.addMethod("email2", function (value, element) {
+                        // allow any non-whitespace characters as the host part
+                        return this.optional(element) || /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,3})$/.test(value);
+                    });
+
+                });
+            </script>
+            
+<script  src="https://mintransporte.gov.co/media/plugins/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/default/js/global.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/vozme/vozme.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/sessionAlert/sessionAlert.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/jqueryValidate/1.12.0/src/localization/messages_es.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/slick/1.6.0/slick.min.js"></script>
+<script  src="https://mintransporte.gov.co/media/plugins/calendar/jquery-timepicker/1.4.4/jquery-ui-timepicker-addon.min.js"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/bloqueFooter.js?nxcache=1732048722"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/slick-animation.min.js?nxcache=1732048722"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/bloqueDynamic.js?nxcache=1732048722"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/BloqueEnlaces.js?nxcache=1732048722"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/bloqueAccesibilidad.js?nxcache=1732048722"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/bloqueCookieUser.js?nxcache=1732048722"></script>
+<script src="https://mintransporte.gov.co/mod/Bloques/js/bloqueHeader.js?nxcache=1732048722"></script>
+
+</body>
+</html>
