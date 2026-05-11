@@ -11,20 +11,26 @@ TOKENS_OVERLAP = 50
 CHARS_PER_TOKEN = 4
 
 
-def init_chunks_table(cursor):
-    """Crea la tabla chunks para el RAG."""
+def init_chunks_table(cursor, force_reset=False):
+    """
+    Crea la tabla chunks.
+    Solo borra todo si force_reset es True.
+    """
+    if force_reset:
+        print("[!] Reseteando tabla chunks por completo...")
+        cursor.execute("DROP TABLE IF EXISTS chunks")
+        cursor.execute("DELETE FROM sqlite_sequence WHERE name='chunks'")
+
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS chunks (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             doc_id INTEGER NOT NULL REFERENCES documentos(id),
             texto TEXT NOT NULL,
             metadata TEXT,
-            tokens_estimados INTEGER
+            tokens_estimados INTEGER,
+            procesado INTEGER DEFAULT 0
         )
     """)
-
-    cursor.execute("DELETE FROM chunks")
-    cursor.execute("DELETE FROM sqlite_sequence WHERE name='chunks'")
 
 
 def extract_articles_with_context(content):
@@ -127,6 +133,7 @@ def segment_documents_for_article():
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
+
         init_chunks_table(cursor)
 
         text_splitter = RecursiveCharacterTextSplitter(
@@ -138,15 +145,30 @@ def segment_documents_for_article():
 
         total_chunks = 0
 
-        cursor.execute(
+        main_cursor = conn.cursor()
+        action_cursor = conn.cursor()
+
+        main_cursor.execute(
             "SELECT id, titulo, contenido FROM documentos WHERE procesado = 1"
         )
 
-        for doc_id, title, content in cursor:
+        for doc_id, title, content in main_cursor:
             if not content:
                 continue
 
-            print(f"Segmentando documento ID: {doc_id} - {title[:30]}...")
+            # Verificamos si este documento ya tiene chunks en la tabla
+            action_cursor.execute(
+                "SELECT COUNT(*) FROM chunks WHERE doc_id = ?", (doc_id,)
+            )
+            is_segmented = action_cursor.fetchone()[0]
+
+            if is_segmented > 0:
+                print(
+                    f"[-] Saltando: '{title[:30]}...' ya tiene {is_segmented} fragmentos en la DB."
+                )
+                continue
+
+            print(f"[*] Segmentando nuevo documento ID: {doc_id} - {title[:30]}...")
 
             effective_date = extract_title_date(title)
             articles_data = extract_articles_with_context(content)
@@ -174,8 +196,7 @@ def segment_documents_for_article():
 
                     estimated_tokens = len(chunk_text) // CHARS_PER_TOKEN
 
-                    insert_cursor = conn.cursor()
-                    insert_cursor.execute(
+                    action_cursor.execute(
                         """
                         INSERT INTO chunks (doc_id, texto, metadata, tokens_estimados)
                         VALUES (?, ?, ?, ?)
