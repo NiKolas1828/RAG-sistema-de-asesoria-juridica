@@ -1,8 +1,9 @@
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 
 # Carga el .env
-load_dotenv()
+# load_dotenv()
 
 # Ubicación de este archivo (src/config.py)
 CURRENT_FILE = Path(__file__).resolve()
@@ -17,4 +18,4 @@ CSV_REVISION_PATH = DATA_DIR / "chunks_revision.csv"
 
 # Configuraciones de IA
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-# EMBEDDING_MODEL = "models/text-embedding-004"
+EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"

@@ -1,5 +1,6 @@
 from src.processors.document_loader import process_documents, standardize
 from src.processors.text_segmenter import segment_documents_for_article
+from src.processors.embedding_processor import run_embedding_pipeline
 
 
 def main():
@@ -13,6 +14,8 @@ def main():
 
     print("\n[3/3] Generando chunks para RAG...")
     segment_documents_for_article()
+
+    run_embedding_pipeline()
 
     print("\n=== PIPELINE FINALIZADO EXITOSAMENTE ===")
 
