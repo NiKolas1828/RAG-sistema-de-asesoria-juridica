@@ -1,7 +1,7 @@
 data/*.db
 data/*.sqlite3
-
 data/*.csv
+data/chroma_db/
 
 venv/
 env/
@@ -23,6 +23,5 @@ pycache/
 .idea/
 .DS_Store
 *.swp
-
 
 *.log
