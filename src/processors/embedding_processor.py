@@ -1,6 +1,8 @@
 import sqlite3
+import json
 from src.config import DB_PATH
 from src.vector_store.local_embedder import generate_local_embeddings
+from src.vector_store.vector_manager import VectorManager
 
 
 def run_embedding_pipeline():
@@ -13,8 +15,11 @@ def run_embedding_pipeline():
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
+    # Inicializamos el gestor de ChromaDB
+    v_manager = VectorManager()
+
     # 1. Obtener solo los chunks que no han sido indexados
-    cursor.execute("SELECT id, texto FROM chunks WHERE procesado = 0")
+    cursor.execute("SELECT id, texto, metadata FROM chunks WHERE procesado = 0")
     rows = cursor.fetchall()
     total_pendientes = len(rows)
 
@@ -31,19 +36,21 @@ def run_embedding_pipeline():
 
     for i in range(0, total_pendientes, batch_size):
         batch_rows = rows[i : i + batch_size]
-        textos = [r["texto"] for r in batch_rows]
+        texts = [r["texto"] for r in batch_rows]
         ids = [r["id"] for r in batch_rows]
+        metadata = [json.loads(r["metadata"]) for r in batch_rows]
 
-        vectores = generate_local_embeddings(textos)
+        embeddings = generate_local_embeddings(texts)
 
-        if vectores and len(vectores) == len(ids):
+        if embeddings and len(embeddings) == len(ids):
+            v_manager.upsert_batch(ids, embeddings, texts, metadata)
+
             # 3. Actualizar el flag en la base de datos
-            for chunk_id in ids:
-                cursor.execute(
-                    "UPDATE chunks SET procesado = 1 WHERE id = ?", (chunk_id,)
-                )
-
+            cursor.executemany(
+                "UPDATE chunks SET procesado = 1 WHERE id = ?", [(idx,) for idx in ids]
+            )
             conn.commit()  # Guardamos progreso tras cada lote
+
             procesados_exitosamente += len(ids)
             print(
                 f"    -> Progreso: {procesados_exitosamente}/{total_pendientes} completados...",
@@ -53,9 +60,5 @@ def run_embedding_pipeline():
             print(f"\n[!] Error procesando el lote que inicia en ID {ids[0]}.")
             break
 
-    print("\n\n✅ Proceso finalizado correctamente.")
-    print(
-        f"[*] Total de fragmentos marcados como procesados: {procesados_exitosamente}"
-    )
-
+    print(f"\n✅ Sincronización completada. {len(rows)} fragmentos indexados.")
     conn.close()
