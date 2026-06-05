@@ -54,7 +54,16 @@ class ResponseGenerator:
         return self._groq
 
     def _hay_contexto_suficiente(self, rag_output: Dict[str, Any]) -> bool:
-        """Verifica que el retrieval encontró chunks relevantes."""
+        """Verifica que el retrieval encontró chunks relevantes.
+
+        Usa las claves reales que devuelve ContextBuilder:
+          - 'contexto_formateado': texto con los fragmentos normativos
+          - 'documentos_usados': cantidad de chunks incluidos
+          - 'score_promedio': similitud promedio de los chunks seleccionados
+
+        Nota: la clave 'chunks_seleccionados' no existe en el output de
+        ContextBuilder — usar 'score_promedio' y 'documentos_usados'.
+        """
         if rag_output.get("status") != "éxito":
             return False
 
@@ -62,16 +71,16 @@ class ResponseGenerator:
         if not contexto:
             return False
 
-        # Revisar similitud máxima de los chunks recuperados
-        chunks = contexto.get("chunks_seleccionados", [])
-        if not chunks:
+        # Verificar que hay documentos y que el contexto tiene contenido
+        if contexto.get("documentos_usados", 0) == 0:
             return False
 
-        max_sim = max(
-            (c.get("similitud", 0.0) for c in chunks),
-            default=0.0,
-        )
-        return max_sim >= self.config.min_similarity_to_generate
+        if not contexto.get("contexto_formateado", "").strip():
+            return False
+
+        # Verificar similitud promedio contra el umbral configurado
+        score = contexto.get("score_promedio", 0.0)
+        return score >= self.config.min_similarity_to_generate
 
     def generate(self, rag_output: Dict[str, Any]) -> Dict[str, Any]:
         """

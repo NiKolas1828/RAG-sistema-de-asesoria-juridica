@@ -19,12 +19,21 @@ durationpy==0.10
 filelock==3.29.0
 flatbuffers==25.12.19
 fsspec==2026.4.0
+google-ai-generativelanguage==0.6.15
+google-api-core==2.25.2
+google-api-python-client==2.197.0
 google-auth==2.52.0
+google-auth-httplib2==0.4.0
+google-genai==2.8.0
+google-generativeai==0.8.6
 googleapis-common-protos==1.75.0
+groq==1.4.0
 grpcio==1.80.0
+grpcio-status==1.71.2
 h11==0.16.0
 hf-xet==1.5.0
 httpcore==1.0.9
+httplib2==0.31.2
 httptools==0.7.1
 httpx==0.28.1
 huggingface_hub==1.14.0
@@ -80,7 +89,8 @@ pdf2image==1.17.0
 pdfminer.six==20251230
 pdfplumber==0.11.9
 pillow==12.2.0
-protobuf==6.33.6
+proto-plus==1.28.0
+protobuf==5.29.6
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
 pybase64==1.4.3
@@ -89,6 +99,7 @@ pydantic==2.13.3
 pydantic-settings==2.14.1
 pydantic_core==2.46.3
 Pygments==2.20.0
+pyparsing==3.3.2
 pypdf==6.10.2
 pypdfium2==5.7.1
 PyPika==0.51.1
@@ -125,6 +136,7 @@ triton==3.6.0
 typer==0.25.1
 typing-inspection==0.4.2
 typing_extensions==4.15.0
+uritemplate==4.2.0
 urllib3==2.6.3
 uuid_utils==0.14.1
 uvicorn==0.46.0
