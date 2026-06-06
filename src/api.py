@@ -1,4 +1,7 @@
-"""FastAPI entrypoint for RAG legal consultas."""
+"""FastAPI entrypoint for RAG legal consultas.
+    ejecuta: python -m uvicorn src.api:app --reload
+    pruebas: curl -X POST "http://localhost:8000/consulta" -H "Content-Type: application/json" -d '{"question": "¿Cuál es la multa por no usar casco en moto?"}'
+"""
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field

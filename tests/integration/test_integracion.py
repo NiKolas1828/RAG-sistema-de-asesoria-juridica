@@ -8,7 +8,7 @@ Tests de integración del flujo completo:
 Cubren el contrato entre módulos usando mocks, sin necesidad
 de base de datos vectorial ni API keys reales.
 
-Ejecutar con: python test_integracion.py
+Ejecutar con: python -m pytest tests/integration/test_integracion.py
 """
 
 import sys
