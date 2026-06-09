@@ -3,6 +3,7 @@
     pruebas: curl -X POST "http://localhost:8000/consulta" -H "Content-Type: application/json" -d '{"question": "¿Cuál es la multa por no usar casco en moto?"}'
 """
 
+from typing import Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
@@ -24,10 +25,11 @@ class ConsultaRequest(BaseModel):
 class ConsultaResponse(BaseModel):
     answer: str
     status: str
-    model: str | None = None
-    prompt_tokens: int | None = None
+    model: Optional[str] = None
+    prompt_tokens: Optional[int] = None
     original_question: str
-    error: str | None = None
+    error: Optional[str] = None
+
 
 
 class HealthResponse(BaseModel):

@@ -157,15 +157,38 @@ class ContextBuilder:
         if top_docs:
             top = top_docs[0]
             text = top.get("texto", "")
-            truncated = text[:1000]
             meta = top.get("metadata", {}) or {}
             articulo = meta.get("articulo") if isinstance(meta, dict) else None
             fuente = meta.get("fuente") if isinstance(meta, dict) else None
             header = f"[1] {fuente or 'Fuente desconocida'} | {articulo or 'Artículo/Sección'} | Relevancia: {round(top.get('similitud',0.0)*100,2)}%"
             separator = "-" * 60
+            
+            # Estimar presupuesto de caracteres basándose en max_tokens y el tamaño del header
+            header_len = len("NORMATIVAS JURÍDICAS RELEVANTES\n" + ("═" * 60) + "\n\n" + header + "\n" + separator + "\n")
+            char_budget = max(40, (self.max_tokens * 4) - header_len)
+            
+            truncated = text[:char_budget]
             final = header + "\n" + separator + "\n" + " ".join(truncated.split())
             final_context = "NORMATIVAS JURÍDICAS RELEVANTES\n" + ("═" * 60) + "\n\n" + final
             tokens = self._estimate_tokens(final_context)
+            
+            # Si aún excede, simplificar progresivamente quitando decoraciones
+            if tokens > self.max_tokens:
+                final_context = final
+                tokens = self._estimate_tokens(final_context)
+                
+            if tokens > self.max_tokens:
+                final_context = " ".join(text.split())
+                try:
+                    import tiktoken
+                    enc = tiktoken.get_encoding("cl100k_base")
+                    encoded = enc.encode(final_context)
+                    if len(encoded) > self.max_tokens:
+                        final_context = enc.decode(encoded[:self.max_tokens])
+                except Exception:
+                    final_context = final_context[:self.max_tokens * 3]
+                tokens = self._estimate_tokens(final_context)
+                
             return final_context, tokens
 
         return "", 0
