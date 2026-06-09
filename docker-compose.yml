@@ -1,0 +1,37 @@
+services:
+  chroma-db:
+    image: chromadb/chroma:latest
+    container_name: chroma-vector-db
+    ports:
+      - "8000:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+      - ANONYMIZED_TELEMETRY=FALSE
+    volumes:
+      - chroma_data:/chroma/chroma
+    restart: unless-stopped
+
+  rag-api:
+    build: .
+    container_name: rag-asesoria-api
+    ports:
+      - "8085:8080"
+    environment:
+      - CHROMA_MODE=http
+      - CHROMA_HOST=chroma-db
+      - CHROMA_PORT=8000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - hf_cache:/root/.cache/huggingface
+    depends_on:
+      - chroma-db
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
+    driver: local
+  hf_cache:
+    driver: local

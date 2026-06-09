@@ -49,7 +49,9 @@ class ContextBuilder:
             "tokens_contexto": tokens_used,
             "tokens_disponibles": max(0, self.max_tokens - tokens_used),
             "score_promedio": score_prom,
+            "chunks_seleccionados": top_docs,
         }
+
 
     def _filter_by_score(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if not results:
