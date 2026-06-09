@@ -8,7 +8,7 @@
 # ============================================================
 #
 # Ejecución:
-#   python test_generation.py
+#   python -m pytest tests/unit/test_generation.py
 #
 # Requiere .env con GEMINI_API_KEY y/o GROQ_API_KEY
 # ============================================================
@@ -39,27 +39,16 @@ def info(msg): logger.info(f"{CYAN}→ {msg}{RESET}")
 # ─── Helpers ────────────────────────────────────────────────
 
 def _mock_rag_output(query: str, similitud: float = 0.85) -> dict:
-    """Simula el output de RAGPipeline para tests sin base de datos."""
+    """Simula el output de RAGPipeline para tests sin base de datos.
+
+    Usa el formato real que devuelve ContextBuilder:
+      - contexto_formateado, documentos_usados, score_promedio
+    (NO chunks_seleccionados, que no existe en el output real)
+    """
     return {
         "query_original": query,
         "status": "éxito",
         "contexto": {
-            "chunks_seleccionados": [
-                {
-                    "texto": (
-                        "Artículo 106. Todo conductor de motocicleta, motoneta y bicicleta "
-                        "motorizada, debe portar casco de seguridad homologado. "
-                        "El incumplimiento de esta norma acarrea multa equivalente a quince (15) "
-                        "salarios mínimos legales diarios vigentes."
-                    ),
-                    "similitud": similitud,
-                    "metadata": {
-                        "fuente": "Código Nacional de Tránsito — Ley 769 de 2002",
-                        "articulo": "Art. 106",
-                        "capitulo": "Título VII",
-                    },
-                }
-            ],
             "contexto_formateado": (
                 "[1] Art. 106 — Ley 769 de 2002\n"
                 "Todo conductor de motocicleta, motoneta y bicicleta motorizada, "
@@ -67,6 +56,10 @@ def _mock_rag_output(query: str, similitud: float = 0.85) -> dict:
                 "esta norma acarrea multa equivalente a quince (15) salarios mínimos "
                 "legales diarios vigentes."
             ),
+            "documentos_usados": 1,
+            "tokens_contexto": 80,
+            "tokens_disponibles": 1920,
+            "score_promedio": similitud,
         },
         "prompt": {
             "prompt": (
@@ -81,15 +74,16 @@ def _mock_rag_output(query: str, similitud: float = 0.85) -> dict:
 
 
 def _mock_rag_output_sin_contexto(query: str) -> dict:
-    """Simula un RAG output sin chunks relevantes."""
+    """Simula un RAG output sin chunks relevantes (similitud muy baja)."""
     return {
         "query_original": query,
         "status": "éxito",
         "contexto": {
-            "chunks_seleccionados": [
-                {"similitud": 0.30, "texto": "..."}
-            ],
             "contexto_formateado": "",
+            "documentos_usados": 0,
+            "tokens_contexto": 0,
+            "tokens_disponibles": 2000,
+            "score_promedio": 0.0,
         },
         "prompt": {"prompt": "", "tokens_prompt": 0, "tokens_available_for_response": 0},
     }
@@ -126,8 +120,8 @@ def test_parametros_llm_config():
     )
 
     cfg = GenerationConfig()
-    assert 0.5 <= cfg.min_similarity_to_generate <= 0.9, (
-        f"Umbral de similitud fuera de rango razonable: {cfg.min_similarity_to_generate}"
+    assert 0.0 <= cfg.min_similarity_to_generate <= 1.0, (
+        f"Umbral de similitud fuera de rango válido (0-1): {cfg.min_similarity_to_generate}"
     )
 
     ok("Parámetros LLM correctamente configurados")

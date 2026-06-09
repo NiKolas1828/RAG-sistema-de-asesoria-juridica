@@ -1,6 +1,7 @@
 """
 Script de prueba para validar el servicio de búsqueda semántica.
 Realiza pruebas de los 3 componentes: query processing, búsqueda, y orchestración.
+Ejecutar: python -m pytest tests/integration/test_search.py
 """
 
 from src.retrieval.search_handler import SearchHandler

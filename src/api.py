@@ -1,140 +1,72 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from src.retrieval.rag_pipeline import RAGPipeline
-from src.generation.response_generator import ResponseGenerator
-import logging
-import sqlite3
-from src.config import DB_PATH
+"""FastAPI entrypoint for RAG legal consultas.
+    ejecuta: python -m uvicorn src.api:app --reload
+    pruebas: curl -X POST "http://localhost:8000/consulta" -H "Content-Type: application/json" -d '{"question": "¿Cuál es la multa por no usar casco en moto?"}'
+"""
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
-logger = logging.getLogger("rag_api")
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
+from main import run_consulta
+
 
 app = FastAPI(
-    title="Sistema RAG - Asesoría Jurídica de Tránsito",
-    description="API REST para consultar las normas de tránsito colombianas utilizando RAG.",
-    version="1.0"
+    title="RAG Normas de Transito",
+    description="API REST para consultas juridicas sobre normas de transito.",
+    version="1.0.0",
 )
 
-# Inicialización diferida/única del pipeline y generador al arrancar la app
-pipeline = None
-generator = None
 
-try:
-    pipeline = RAGPipeline()
-    generator = ResponseGenerator()
-    logger.info("Componentes RAG (Pipeline y Generator) inicializados con éxito.")
-except Exception as e:
-    logger.error(f"Error crítico al inicializar componentes RAG: {e}", exc_info=True)
+class ConsultaRequest(BaseModel):
+    question: str = Field(..., min_length=3, description="Pregunta juridica")
+    verbose: bool = Field(default=False, description="Mostrar detalles internos")
 
 
-class QueryRequest(BaseModel):
-    pregunta: str
+class ConsultaResponse(BaseModel):
+    answer: str
+    status: str
+    model: str | None = None
+    prompt_tokens: int | None = None
+    original_question: str
+    error: str | None = None
 
 
-@app.get("/")
-def read_root():
-    return {
-        "app": "RAG Sistema de Asesoría Jurídica de Tránsito Colombiano",
-        "docs_url": "/docs",
-        "status": "running"
-    }
+class HealthResponse(BaseModel):
+    status: str
 
 
-@app.get("/health")
-def health_check():
-    health_status = {
-        "status": "healthy",
-        "chromadb_connection": "unknown",
-        "sqlite_db": "unknown"
-    }
-    
-    # 1. Verificar conexión a ChromaDB
-    if pipeline and pipeline.search_handler and pipeline.search_handler.search_engine:
-        try:
-            count = pipeline.search_handler.search_engine.collection.count()
-            health_status["chromadb_connection"] = f"connected (embeddings count: {count})"
-        except Exception as e:
-            health_status["status"] = "unhealthy"
-            health_status["chromadb_connection"] = f"failed: {str(e)}"
+class VersionResponse(BaseModel):
+    service: str
+    version: str
+
+
+@app.post("/consulta", response_model=ConsultaResponse)
+def consulta(payload: ConsultaRequest) -> ConsultaResponse:
+    resultado = run_consulta(payload.question, verbose=payload.verbose)
+
+    if not isinstance(resultado, dict):
+        raise HTTPException(status_code=500, detail="Respuesta invalida del motor")
+
+    if resultado.get("error"):
+        status = "error"
     else:
-        health_status["status"] = "unhealthy"
-        health_status["chromadb_connection"] = "not_initialized"
-        
-    # 2. Verificar acceso a SQLite
-    try:
-        conn = sqlite3.connect(DB_PATH)
-        c = conn.cursor()
-        c.execute("SELECT COUNT(*) FROM documentos")
-        doc_count = c.fetchone()[0]
-        health_status["sqlite_db"] = f"accessible (documentos count: {doc_count})"
-        conn.close()
-    except Exception as e:
-        health_status["status"] = "unhealthy"
-        health_status["sqlite_db"] = f"failed: {str(e)}"
-        
-    return health_status
+        status = resultado.get("status", "ok")
+
+    return ConsultaResponse(
+        answer=resultado.get("respuesta", ""),
+        status=status,
+        model=resultado.get("modelo_usado"),
+        prompt_tokens=resultado.get("tokens_prompt"),
+        original_question=resultado.get("query_original", payload.question),
+        error=resultado.get("error"),
+    )
 
 
-@app.post("/query")
-def post_query(request: QueryRequest):
-    if not pipeline or not generator:
-        raise HTTPException(
-            status_code=503,
-            detail="El servicio RAG no está inicializado correctamente. Verifica los logs."
-        )
-        
-    if not request.pregunta.strip():
-        raise HTTPException(
-            status_code=400,
-            detail="La pregunta no puede estar vacía."
-        )
-        
-    try:
-        logger.info(f"Procesando consulta de la API: '{request.pregunta}'")
-        
-        # Paso 1: Retrieval + prompt
-        rag_output = pipeline.run(request.pregunta, k=15, max_documents=10)
-        
-        # Paso 2: Generación de respuesta con LLM (Gemini -> Groq fallback)
-        resultado = generator.generate(rag_output)
-        
-        # Estructurar fragmentos fuente y citas para el cliente
-        chunks = rag_output.get("contexto", {}).get("chunks_seleccionados", []) if rag_output.get("contexto") else []
-        
-        citas = []
-        fragmentos = []
-        for c in chunks:
-            meta = c.get("metadata", {})
-            fuente = meta.get("fuente", "Desconocida")
-            articulo = meta.get("articulo", "")
-            
-            # Cita formateada
-            cita = f"{articulo} - {fuente}" if articulo else fuente
-            if cita not in citas:
-                citas.append(cita)
-                
-            # Fragmento completo
-            fragmentos.append({
-                "texto": c.get("texto", ""),
-                "similitud": c.get("similitud", 0.0),
-                "metadata": meta
-            })
-            
-        return {
-            "query_original": request.pregunta,
-            "respuesta": resultado.get("respuesta") or resultado.get("error") or "No se pudo generar una respuesta.",
-            "modelo_usado": resultado.get("modelo_usado") or "sin_llm",
-            "tokens_prompt": resultado.get("tokens_prompt", 0),
-            "status": resultado.get("status", "error"),
-            "citas": citas,
-            "fragmentos_fuente": fragmentos
-        }
-    except Exception as e:
-        logger.error(f"Error al procesar la query: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error interno del servidor RAG: {str(e)}"
-        )
+@app.get("/health", response_model=HealthResponse)
+def health() -> HealthResponse:
+    return HealthResponse(status="ok")
+
+
+@app.get("/version", response_model=VersionResponse)
+def version() -> VersionResponse:
+    return VersionResponse(service="rag-transito", version=app.version)
+

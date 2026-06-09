@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script interactivo para probar el flujo RAG completo.
-Ejecuta: python test_rag_flow.py
+Ejecuta: python -m pytest tests/integration/test_rag_flow.py
 """
 
 from src.retrieval.rag_pipeline import RAGPipeline

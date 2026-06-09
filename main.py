@@ -57,6 +57,8 @@ def run_consulta(pregunta: str, verbose: bool = False) -> dict:
     generator  = ResponseGenerator()
 
     # Paso 1: Retrieval + construcción de contexto + prompt
+    # k=15: recupera más candidatos para aumentar cobertura temática
+    # max_documents=10: usa más fragmentos en el contexto del LLM
     rag_output = pipeline.run(pregunta, k=15, max_documents=10, verbose=verbose)
 
     # Paso 2: Generación de respuesta con LLM

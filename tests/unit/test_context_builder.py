@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Pruebas directas para ContextBuilder.
-Ejecuta: python test_context_builder.py
+Ejecuta: python -m pytest tests/unit/test_context_builder.py
 """
 
 from src.context_builder.context_builder import ContextBuilder

@@ -1,6 +1,6 @@
 # src/generation/gemini_client.py
 # ============================================================
-# Cliente para Gemini 2.0 Flash via google-generativeai SDK
+# Cliente para Gemini 2.0 Flash via google-genai SDK (nuevo)
 # Maneja autenticación, parámetros, reintentos y errores
 # ============================================================
 
@@ -27,16 +27,16 @@ class GeminiClientError(Exception):
 
 class GeminiClient:
     """
-    Cliente para Gemini 2.0 Flash.
+    Cliente para Gemini 2.0 Flash usando el SDK google-genai (versión actual).
 
     Uso básico:
         client = GeminiClient()
-        respuesta = client.generate(prompt="...", context="...")
+        respuesta = client.generate(prompt="...")
     """
 
     def __init__(self, config: Optional[GeminiConfig] = None):
         self.config = config or GeminiConfig()
-        self._model = None  # inicialización lazy
+        self._client = None  # inicialización lazy
         self._api_key = os.getenv("GEMINI_API_KEY")
 
         if not self._api_key:
@@ -46,33 +46,18 @@ class GeminiClient:
                 "Obtén tu key gratis en https://aistudio.google.com"
             )
 
-    def _get_model(self):
-        """Inicializa el modelo solo cuando se necesita (lazy loading)."""
-        if self._model is None:
+    def _get_client(self):
+        """Inicializa el cliente Gemini solo cuando se necesita (lazy loading)."""
+        if self._client is None:
             try:
-                import google.generativeai as genai  # type: ignore
+                from google import genai  # type: ignore
             except ImportError:
                 raise ImportError(
-                    "Librería google-generativeai no instalada. "
-                    "Ejecuta: pip install google-generativeai"
+                    "Librería google-genai no instalada. "
+                    "Ejecuta: pip install google-genai"
                 )
-
-            genai.configure(api_key=self._api_key)
-
-            generation_cfg = genai.types.GenerationConfig(
-                temperature=self.config.temperature,
-                max_output_tokens=self.config.max_output_tokens,
-                top_p=self.config.top_p,
-                top_k=self.config.top_k,
-            )
-
-            self._model = genai.GenerativeModel(
-                model_name=self.config.model_name,
-                generation_config=generation_cfg,
-                system_instruction=self.config.system_instruction,
-            )
-
-        return self._model
+            self._client = genai.Client(api_key=self._api_key)
+        return self._client
 
     def generate(self, prompt: str) -> str:
         """
@@ -88,15 +73,32 @@ class GeminiClient:
             GeminiRateLimitError: Si se supera el límite de 15 RPM.
             GeminiClientError: Para cualquier otro error de la API.
         """
-        model = self._get_model()
+        client = self._get_client()
         last_exception = None
+
+        try:
+            from google.genai import types  # type: ignore
+        except ImportError:
+            raise ImportError("Librería google-genai no instalada. Ejecuta: pip install google-genai")
+
+        generation_config = types.GenerateContentConfig(
+            system_instruction=self.config.system_instruction,
+            temperature=self.config.temperature,
+            max_output_tokens=self.config.max_output_tokens,
+            top_p=self.config.top_p,
+            top_k=self.config.top_k,
+        )
 
         for intento in range(1, self.config.max_retries + 1):
             try:
                 logger.debug(f"[Gemini] Intento {intento}/{self.config.max_retries}")
-                response = model.generate_content(prompt)
 
-                # Verificar que la respuesta tiene contenido
+                response = client.models.generate_content(
+                    model=self.config.model_name,
+                    contents=prompt,
+                    config=generation_config,
+                )
+
                 if not response.text:
                     raise GeminiClientError("Gemini retornó respuesta vacía.")
 
