@@ -57,9 +57,9 @@ def run_consulta(pregunta: str, verbose: bool = False) -> dict:
     generator  = ResponseGenerator()
 
     # Paso 1: Retrieval + construcción de contexto + prompt
-    # k=10: recupera más candidatos para aumentar cobertura temática
-    # max_documents=5: usa más fragmentos en el contexto del LLM
-    rag_output = pipeline.run(pregunta, k=10, max_documents=5, verbose=verbose)
+    # k=20: recupera más candidatos para aumentar cobertura temática
+    # max_documents=15: usa más fragmentos en el contexto del LLM
+    rag_output = pipeline.run(pregunta, k=20, max_documents=15, verbose=verbose)
 
     # Paso 2: Generación de respuesta con LLM
     resultado  = generator.generate(rag_output)
@@ -109,7 +109,7 @@ def run_interactivo():
             break
 
         print("\n⏳ Consultando normas...\n")
-        rag_output = pipeline.run(pregunta, k=10, max_documents=5)
+        rag_output = pipeline.run(pregunta, k=20, max_documents=15)
         resultado  = generator.generate(rag_output)
         imprimir_resultado(resultado)
 

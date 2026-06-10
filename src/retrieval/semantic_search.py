@@ -8,7 +8,7 @@ class SemanticSearchEngine:
         self.vector_manager = VectorManager()
         self.collection = self.vector_manager.collection
     
-    def search(self, embedding: list, k: int = 5) -> dict:
+    def search(self, embedding: list, k: int = 5, where_document: dict = None) -> dict:
         try:
             if not embedding or len(embedding) != 384:
                 raise ValueError("El embedding debe ser una lista de 384 elementos")
@@ -16,12 +16,16 @@ class SemanticSearchEngine:
             if k <= 0:
                 raise ValueError("k debe ser mayor a 0")
             
+            query_args = {
+                "query_embeddings": [embedding],
+                "n_results": k,
+                "include": ["documents", "metadatas", "distances"]
+            }
+            if where_document:
+                query_args["where_document"] = where_document
+
             # Realizar búsqueda en ChromaDB
-            results = self.collection.query(
-                query_embeddings=[embedding],
-                n_results=k,
-                include=["documents", "metadatas", "distances"]
-            )
+            results = self.collection.query(**query_args)
 
             processed_results = self._process_results(results)
             
