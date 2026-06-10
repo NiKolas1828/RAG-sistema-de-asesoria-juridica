@@ -8,7 +8,7 @@
 # ============================================================
 #
 # Ejecución:
-#   python test_generation.py
+#   python -m pytest tests/unit/test_generation.py
 #
 # Requiere .env con GEMINI_API_KEY y/o GROQ_API_KEY
 # ============================================================

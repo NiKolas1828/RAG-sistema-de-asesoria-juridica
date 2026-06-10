@@ -14,7 +14,7 @@ de aceptación del feature "Diseño de prompts documentado":
   - Las instrucciones adicionales se incorporan correctamente
 
 Ejecución:
-    python test_prompt_builder.py
+    python -m pytest tests/unit/test_prompt_builder.py
 ============================================================
 """
 

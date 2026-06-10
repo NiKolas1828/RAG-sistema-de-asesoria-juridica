@@ -41,8 +41,7 @@ class SemanticSearchEngine:
         metadatas = chroma_results.get("metadatas", [[]])[0]
         distances = chroma_results.get("distances", [[]])[0]
         
-        max_dist = max(distances) if distances else 1.0
-        similarities = [round(1 - (d / max_dist), 4) for d in distances]
+        similarities = [round(1 / (1 + d), 4) for d in distances]
         
         results = []
         for i, (doc, metadata, sim) in enumerate(zip(documents, metadatas, similarities)):
