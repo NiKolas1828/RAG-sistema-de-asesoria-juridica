@@ -11,6 +11,9 @@ model = SentenceTransformer(EMBEDDING_MODEL, device=device)
 
 if device == "cpu":
     # Reducir consumo de memoria de ~470MB a ~120MB mediante cuantización dinámica en CPU
+    # Configurar backend a qnnpack para evitar error de instrucción ilegal (SIGILL)
+    # en procesadores sin soporte para AVX2 (fbgemm lo requiere).
+    torch.backends.quantized.engine = 'qnnpack'
     model = torch.quantization.quantize_dynamic(
         model, {torch.nn.Linear}, dtype=torch.qint8
     )

@@ -99,6 +99,7 @@ class GroqClient:
                     temperature=self.config.temperature,
                     max_tokens=self.config.max_tokens,
                     top_p=self.config.top_p,
+                    timeout=self.config.timeout_seconds,
                 )
 
                 text = response.choices[0].message.content

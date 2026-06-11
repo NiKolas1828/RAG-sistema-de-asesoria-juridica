@@ -24,6 +24,7 @@ REGLAS:
 3. NO incluyas saludos ni explicaciones.
 4. Mantén las variaciones cortas y directas.
 5. MUY IMPORTANTE: Si la pregunta trata sobre una multa/infracción específica y conoces su código exacto en Colombia según la Resolución 3027 (ej. C.24 para casco, D.02 para SOAT, D.04 para semáforo, C.14 para pico y placa), INCLUYE el código exacto en al menos una de las variaciones.
+6. Si recibes contexto de la conversación (historial), úsalo para entender de qué se está hablando en la pregunta actual (por ejemplo, si la pregunta dice "y cómo se usa?" refiriéndose a un casco mencionado antes, debes generar variaciones sobre "uso del casco de seguridad").
 
 Ejemplo de entrada:
 "cuánto vale la multa por andar sin casco"
@@ -44,16 +45,25 @@ class QueryExpander:
         )
         self.client = GroqClient(config=config)
 
-    def expand_query(self, original_query: str) -> List[str]:
+    def expand_query(self, original_query: str, history: List[dict] = None) -> List[str]:
         """
         Toma la pregunta original y devuelve una lista de queries
         incluyendo la original y 3 variaciones generadas por el LLM.
+        Si hay historial, lo incluye para contextualizar la query (resolución de correferencias).
         """
         queries = [original_query]
         
+        prompt_to_send = original_query
+        if history:
+            context_str = "Contexto previo de la conversación:\n"
+            for msg in history[-3:]:
+                rol = "Usuario" if msg['role'] == 'user' else "Sistema"
+                context_str += f"- {rol}: {msg['content'][:150]}...\n"
+            prompt_to_send = f"{context_str}\nPregunta actual a expandir: {original_query}"
+        
         try:
             logger.debug(f"[QueryExpander] Expandiendo consulta: '{original_query}'")
-            respuesta = self.client.generate(prompt=original_query)
+            respuesta = self.client.generate(prompt=prompt_to_send)
             
             # Limpiar y parsear las líneas
             variaciones = [line.strip() for line in respuesta.split("\n") if line.strip()]

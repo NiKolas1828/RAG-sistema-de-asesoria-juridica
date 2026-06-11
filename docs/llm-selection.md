@@ -165,30 +165,32 @@ def query_rag(question: str, retrieved_chunks: list[str]) -> str:
 
 ## Segunda opción — Fallback
 
-### Llama 3.3 70B vía Groq
+### Cadena de Fallback en Groq (Doble Nivel)
 
-**Proveedor:** Groq Cloud  
-**Endpoint:** `https://api.groq.com/openai/v1/chat/completions`  
-**Compatibilidad:** OpenAI-compatible (drop-in replacement en la mayoría de frameworks)
+Cuando Gemini 2.0 Flash Lite supera sus límites de cuota (rate limits del tier gratuito), el sistema utiliza una cadena de fallback en Groq de dos niveles:
 
-Se recomienda implementar Groq + Llama 3.3 70B como **fallback automático** cuando Gemini supere el rate limit de 15 RPM. La lógica es sencilla:
+1. **Fallback #1: Llama 3.3 70B (`llama-3.3-70b-versatile`)**
+   * **Propósito:** Es el modelo principal de respaldo. Al contar con 70B de parámetros, ofrece una calidad de respuesta y seguimiento de instrucciones casi idéntica a Gemini. Su límite de TPM (Tokens Per Minute) es más amplio que el de modelos más pequeños en Groq, permitiendo procesar prompts de contexto RAG densos sin errores de saturación.
+   * **Configuración:** `max_tokens=1024`, `temperature=0.1`.
+
+2. **Fallback #2: Llama 3.1 8B (`llama-3.1-8b-instant`)**
+   * **Propósito:** Tercer nivel de seguridad. Si la cuota diaria del modelo 70B se agota, el sistema cae a este modelo 8B. Cuenta con un pool de tokens diario independiente (500k tokens/día vs 100k del 70B en el tier gratuito de Groq).
+   * **Restricción de TPM:** Debido a su límite estricto de **6.000 TPM** en el free tier, se configuró con `max_tokens=512` para evitar errores `413 - Request too large` con prompts de contexto largos.
+
+**Lógica de fallback implementada (`response_generator.py`):**
 
 ```python
-import httpx
-
-async def query_with_fallback(question: str, chunks: list[str]) -> str:
-    try:
-        return await query_gemini(question, chunks)
-    except RateLimitError:
-        return await query_groq(question, chunks)
+# Gemini 2.0 Flash Lite (Principal) 
+#       ↓ (RateLimitError o Cooldown Activo)
+# Groq Llama 3.3 70B (Fallback #1)
+#       ↓ (GroqClientError)
+# Groq Llama 3.1 8B (Fallback #2, max_tokens=512)
 ```
 
-**Ventajas del fallback con Groq:**
-- Inferencia LPU: latencias de ~200ms, más rápida que Gemini en muchos casos.
-- API gratuita con límites propios (rate limits diferentes, complementarios).
-- Llama 3.3 70B tiene buen rendimiento en español para tareas de Q&A sobre documentos.
-
-**Limitación:** Contexto de 128K tokens (vs 1M de Gemini). Suficiente para RAG estándar con k=5 chunks de ~512 tokens.
+**Ventajas del esquema:**
+* Inferencia ultrarrápida (latencias < 1s).
+* Independencia de cuotas: cada modelo opera con un límite de tokens diario diferente en el tier gratuito de Groq, maximizando la disponibilidad.
+* Robustez ante errores 413: se previene la caída del sistema ajustando el tamaño de respuesta del modelo 8B.
 
 ---
 

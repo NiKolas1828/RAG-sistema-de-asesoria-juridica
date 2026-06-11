@@ -43,6 +43,67 @@ def run_ingesta():
     print("\n=== PIPELINE FINALIZADO EXITOSAMENTE ===")
 
 
+def run_reindex():
+    """
+    Re-indexa todos los documentos desde cero usando el chunking inteligente.
+
+    Pasos:
+      1. Limpia la tabla chunks en SQLite (resetea el segmentador).
+      2. Limpia la colección ChromaDB (borra todos los vectores).
+      3. Vuelve a segmentar con _merge_and_split_articles (nuevo chunking).
+      4. Re-genera todos los embeddings y los sube a ChromaDB.
+
+    Los PDFs y documentos originales NO se tocan.
+    """
+    import sqlite3
+    from src.config import DB_PATH
+
+    print("=" * 60)
+    print("  RE-INDEXACIÓN COMPLETA — Chunking Inteligente")
+    print("=" * 60)
+    print("⚠️  Se borrarán todos los chunks y vectores actuales.")
+    print("   Los PDFs originales NO se modifican.")
+    print()
+
+    # ── Paso 1: Limpiar tabla chunks en SQLite ────────────────
+    print("[1/3] Limpiando chunks en SQLite...")
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM chunks")
+    cursor.execute("DELETE FROM sqlite_sequence WHERE name='chunks'")
+    conn.commit()
+    conn.close()
+    print("      ✅ Tabla chunks vaciada.")
+
+    # ── Paso 2: Limpiar ChromaDB ──────────────────────────────
+    print("[2/3] Limpiando colección ChromaDB...")
+    try:
+        import chromadb
+        from src.config import CHROMA_PATH
+        COLLECTION_NAME = "embeddings"   # definido en src/vector_store/vector_manager.py
+        client = chromadb.PersistentClient(path=str(CHROMA_PATH))
+        try:
+            client.delete_collection(COLLECTION_NAME)
+            print(f"      ✅ Colección '{COLLECTION_NAME}' eliminada.")
+        except Exception:
+            print(f"      ℹ️  Colección '{COLLECTION_NAME}' no existía aún.")
+    except Exception as e:
+        print(f"      ⚠️  Error limpiando ChromaDB: {e}")
+
+    # ── Paso 3: Re-segmentar con chunking inteligente ─────────
+    print("[3/3] Re-segmentando documentos con chunking inteligente...")
+    segment_documents_for_article()
+
+    # ── Paso 4: Re-generar embeddings ────────────────────────
+    print("[4/4] Generando embeddings y subiendo a ChromaDB...")
+    run_embedding_pipeline()
+
+    print()
+    print("=" * 60)
+    print("  ✅ RE-INDEXACIÓN COMPLETADA")
+    print("=" * 60)
+
+
 def run_consulta(pregunta: str, verbose: bool = False) -> dict:
     """
     Pipeline completo de consulta: retrieval → contexto → generación.
@@ -58,9 +119,9 @@ def run_consulta(pregunta: str, verbose: bool = False) -> dict:
     generator  = ResponseGenerator()
 
     # Paso 1: Retrieval + construcción de contexto + prompt
-    # k=10: candidatos para ChromaDB (el reranker reduce a top 5)
+    # k=20: candidatos para ChromaDB (el reranker reduce a top 8)
     # max_documents=8: fragmentos que llegan al LLM
-    rag_output = pipeline.run(pregunta, k=10, max_documents=8, verbose=verbose)
+    rag_output = pipeline.run(pregunta, k=20, max_documents=8, verbose=verbose)
 
     # Paso 2: Generación de respuesta con LLM
     resultado  = generator.generate(rag_output)
@@ -77,7 +138,19 @@ def imprimir_resultado(resultado: dict):
     print(f"💬 Respuesta:\n\n{resultado.get('respuesta', '')}")
     print(f"\n🤖 Modelo usado : {resultado.get('modelo_usado', 'N/A')}")
     print(f"📊 Tokens prompt: {resultado.get('tokens_prompt', 0)}")
+    # Mostrar el tipo de pregunta detectado para trazabilidad
+    q_type = resultado.get("question_type", "")
+    if q_type:
+        tipo_emoji = {
+            "multa": "💰", "requisitos": "📋", "uso_correcto": "📖",
+            "comparativo": "⚖️", "infraccion": "🚨", "procedimiento": "🗂️",
+            "general": "💬",
+        }.get(q_type, "💬")
+        print(f"🎯 Tipo de consulta: {tipo_emoji} {q_type}")
     print(f"✅ Estado       : {resultado.get('status', 'N/A')}")
+
+    if resultado.get("status") == "fuera_de_dominio":
+        print("🚫 Consulta detectada fuera del dominio de tránsito colombiano.")
 
     if resultado.get("error"):
         print(f"⚠️  Error        : {resultado['error']}")
@@ -116,10 +189,12 @@ def run_interactivo():
             continue
 
         print("\n⏳ Consultando normas...\n")
-        rag_output = pipeline.run(pregunta, k=10, max_documents=8)
-
-        # Pasar el historial previo al generador para contexto multi-turno
+        # Obtener historial previo para contexto multi-turno
         historial  = memory.get_history() if not memory.is_empty() else None
+        
+        rag_output = pipeline.run(pregunta, k=20, max_documents=8, history=historial)
+
+        # Pasar el historial al generador
         resultado  = generator.generate(rag_output, history=historial)
 
         # Guardar el turno en memoria solo si fue exitoso
@@ -155,9 +230,18 @@ def main():
         help="Mostrar detalles internos del retrieval",
     )
 
+    parser.add_argument(
+        "--reindex",
+        action="store_true",
+        help="Re-indexar todos los documentos desde cero con el nuevo chunking inteligente",
+    )
+
     args = parser.parse_args()
 
-    if args.ingest:
+    if args.reindex:
+        run_reindex()
+
+    elif args.ingest:
         run_ingesta()
 
     elif args.query:
