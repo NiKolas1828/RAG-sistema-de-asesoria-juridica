@@ -16,6 +16,7 @@
 import os
 import logging
 import asyncio
+import re
 from typing import Dict
 
 from dotenv import load_dotenv
@@ -81,6 +82,39 @@ def _get_memory(chat_id: int) -> ConversationMemory:
     return _memorias[chat_id]
 
 
+async def _keep_typing(bot, chat_id, stop_event) -> None:
+    """Envía la acción de escribiendo a Telegram continuamente hasta que se detenga."""
+    while not stop_event.is_set():
+        try:
+            await bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+        except Exception:
+            pass
+        try:
+            await asyncio.wait_for(stop_event.wait(), timeout=4.0)
+        except asyncio.TimeoutError:
+            pass
+
+
+def _markdown_to_html(text: str) -> str:
+    """Convierte texto en Markdown a HTML básico soportado por Telegram."""
+    # Escapar caracteres HTML obligatorios
+    text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    
+    # Negritas: **texto** -> <b>texto</b>
+    text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
+    
+    # Itálicas con asterisco simple: *texto* -> <i>texto</i>
+    text = re.sub(r'(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)', r'<i>\1</i>', text)
+    
+    # Itálicas con guion bajo (delimitadas): _texto_ -> <i>texto</i>
+    text = re.sub(r'(?<!\w)_(.*?)(?<!\w)_', r'<i>\1</i>', text)
+    
+    # Enlaces: [texto](url) -> <a href="\2">\1</a>
+    text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', text)
+    
+    return text
+
+
 def _split_message(text: str, max_len: int = TG_MAX_CHARS) -> list[str]:
     """
     Divide un texto largo en partes respetando el límite de Telegram.
@@ -105,15 +139,17 @@ def _split_message(text: str, max_len: int = TG_MAX_CHARS) -> list[str]:
 
 async def _send_long_message(update: Update, text: str) -> None:
     """Envía un mensaje, partiéndolo si supera el límite de Telegram."""
-    partes = _split_message(text)
+    # Convertir markdown a HTML antes de enviar
+    html_text = _markdown_to_html(text)
+    partes = _split_message(html_text)
     for i, parte in enumerate(partes):
         try:
-            await update.message.reply_text(parte)
+            await update.message.reply_text(parte, parse_mode=ParseMode.HTML)
         except BadRequest as e:
-            logger.warning(f"[Bot] Error enviando parte {i+1}: {e}")
-            await update.message.reply_text(
-                "⚠️ Hubo un error enviando parte de la respuesta."
-            )
+            logger.warning(f"[Bot] Error enviando parte {i+1} en HTML: {e}")
+            # Fallback a texto plano si falla la conversión de HTML
+            plain_text = re.sub(r'<[^>]*>', '', parte)
+            await update.message.reply_text(plain_text)
 
 
 # ─── Handlers ────────────────────────────────────────────────
@@ -122,17 +158,17 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Mensaje de bienvenida."""
     nombre = update.effective_user.first_name or "ciudadano"
     texto = (
-        f"👋 Hola, *{nombre}*\\. Soy el asistente de normas de tránsito de Colombia\\.\n\n"
+        f"👋 Hola, <b>{nombre}</b>. Soy el asistente de normas de tránsito de Colombia.\n\n"
         "Puedo responder preguntas como:\n"
-        "• *¿Cuánto es la multa por no usar casco?*\n"
-        "• *¿Qué documentos necesito para renovar la licencia?*\n"
-        "• *¿Qué dice la ley sobre el SOAT?*\n\n"
-        "Simplemente escríbeme tu pregunta\\. 🚦\n\n"
+        "• <b>¿Cuánto es la multa por no usar casco?</b>\n"
+        "• <b>¿Qué documentos necesito para renovar la licencia?</b>\n"
+        "• <b>¿Qué dice la ley sobre el SOAT?</b>\n\n"
+        "Simplemente escríbeme tu pregunta. 🚦\n\n"
         "Comandos disponibles:\n"
         "/ayuda — Ver esta ayuda\n"
         "/limpiar — Reiniciar el historial de conversación"
     )
-    await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN_V2)
+    await update.message.reply_text(texto, parse_mode=ParseMode.HTML)
 
 
 async def cmd_ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -146,8 +182,8 @@ async def cmd_limpiar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     memoria = _get_memory(chat_id)
     memoria.clear()
     await update.message.reply_text(
-        "🧹 Historial limpiado\\. Empezamos de cero\\.",
-        parse_mode=ParseMode.MARKDOWN_V2,
+        "🧹 Historial limpiado. Empezamos de cero.",
+        parse_mode=ParseMode.HTML,
     )
 
 
@@ -161,8 +197,11 @@ async def handle_pregunta(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     if not pregunta:
         return
 
-    # Mostrar indicador "escribiendo..." mientras procesa
-    await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+    # Iniciar tarea en segundo plano para mantener el estado "escribiendo..." activo
+    stop_event = asyncio.Event()
+    typing_task = asyncio.create_task(
+        _keep_typing(context.bot, chat_id, stop_event)
+    )
 
     memoria   = _get_memory(chat_id)
     pipeline  = _get_pipeline()
@@ -196,20 +235,28 @@ async def handle_pregunta(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             if memoria.turn_count() > 1:
                 respuesta += f"\n\n_🧠 Contexto: {memoria.turn_count()} turnos_"
 
+            # Detener el indicador de escritura justo antes de enviar el mensaje
+            stop_event.set()
+            await typing_task
+
             await _send_long_message(update, respuesta)
 
         else:
+            stop_event.set()
+            await typing_task
             await update.message.reply_text(
-                "No encontré información suficiente sobre eso en las normas consultadas\\. "
-                "Te recomiendo contactar al organismo de tránsito de tu municipio\\.",
-                parse_mode=ParseMode.MARKDOWN_V2,
+                "No encontré información suficiente sobre eso en las normas consultadas. "
+                "Te recomiendo contactar al organismo de tránsito de tu municipio.",
+                parse_mode=ParseMode.HTML,
             )
 
     except Exception as e:
+        stop_event.set()
+        await typing_task
         logger.error(f"[Bot] Error procesando pregunta de {chat_id}: {e}", exc_info=True)
         await update.message.reply_text(
-            "⚠️ Ocurrió un error interno\\. Por favor intenta de nuevo en unos segundos\\.",
-            parse_mode=ParseMode.MARKDOWN_V2,
+            "⚠️ Ocurrió un error interno. Por favor intenta de nuevo en unos segundos.",
+            parse_mode=ParseMode.HTML,
         )
 
 

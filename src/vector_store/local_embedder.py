@@ -4,7 +4,16 @@ import torch
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+if device == "cpu":
+    torch.set_num_threads(1)
+
 model = SentenceTransformer(EMBEDDING_MODEL, device=device)
+
+if device == "cpu":
+    # Reducir consumo de memoria de ~470MB a ~120MB mediante cuantización dinámica en CPU
+    model = torch.quantization.quantize_dynamic(
+        model, {torch.nn.Linear}, dtype=torch.qint8
+    )
 
 
 def generate_local_embeddings(texts: list[str]):
