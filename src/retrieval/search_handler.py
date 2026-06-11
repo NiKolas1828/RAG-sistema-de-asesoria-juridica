@@ -55,29 +55,28 @@ class SearchHandler:
                         print(f"[*] Filtro estricto aplicado para el código: {code}")
                     break  # Con un código detectado es suficiente
 
-            # ── Generar embeddings en PARALELO (antes era secuencial: ~3.5s) ──
-            def embed_and_search(q: str) -> list:
-                """Genera embedding y busca en ChromaDB para una query."""
-                try:
-                    embedding = process_query(q)
-                    results = self.search_engine.search(
-                        embedding, k=k, where_document=where_doc
-                    )
-                    return results.get("resultados", [])
-                except Exception as e:
-                    logger.warning(f"[SearchHandler] Error en variación '{q}': {e}")
-                    return []
+            # ── Generar embeddings en lote (batch) para evitar bloqueos y mejorar latencia ──
+            try:
+                embeddings = process_query(queries)
+            except Exception as e:
+                logger.error(f"[SearchHandler] Error generando embeddings en lote: {e}")
+                embeddings = []
 
             all_results = {}
-            with ThreadPoolExecutor(max_workers=len(queries)) as executor:
-                futures = {executor.submit(embed_and_search, q): q for q in queries}
-                for future in as_completed(futures):
-                    for res in future.result():
-                        text_key = res["texto"]
-                        # Deduplicar: conservar el mayor score
-                        if (text_key not in all_results
-                                or res["similitud"] > all_results[text_key]["similitud"]):
-                            all_results[text_key] = res
+            if embeddings:
+                for q, embedding in zip(queries, embeddings):
+                    try:
+                        results = self.search_engine.search(
+                            embedding, k=k, where_document=where_doc
+                        )
+                        for res in results.get("resultados", []):
+                            text_key = res["texto"]
+                            # Deduplicar: conservar el mayor score
+                            if (text_key not in all_results
+                                    or res["similitud"] > all_results[text_key]["similitud"]):
+                                all_results[text_key] = res
+                    except Exception as e:
+                        logger.warning(f"[SearchHandler] Error en búsqueda de variación '{q}': {e}")
 
             # ── Pre-filtrar por similitud ANTES del Cross-Encoder ──
             # Ordenar y tomar solo los top k para el reranker
