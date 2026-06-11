@@ -37,11 +37,11 @@ class GeminiClient:
     def __init__(self, config: Optional[GeminiConfig] = None):
         self.config = config or GeminiConfig()
         self._client = None  # inicialización lazy
-        self._api_key = os.getenv("GEMINI_API_KEY")
+        self._api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 
         if not self._api_key:
             raise EnvironmentError(
-                "GEMINI_API_KEY no encontrada. "
+                "GEMINI_API_KEY o GOOGLE_API_KEY no encontrada. "
                 "Crea un archivo .env con GEMINI_API_KEY=tu_key. "
                 "Obtén tu key gratis en https://aistudio.google.com"
             )
