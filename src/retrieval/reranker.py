@@ -94,7 +94,7 @@ class Reranker:
             pairs = [(query, chunk.get("texto", "")) for chunk in chunks]
 
             # Predecir puntajes de relevancia
-            scores = model.predict(pairs)
+            scores = model.predict(pairs, num_workers=0, batch_size=8)
 
             # Añadir el puntaje de re-ranking a cada chunk
             ranked = []
