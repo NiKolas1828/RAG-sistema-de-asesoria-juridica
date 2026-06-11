@@ -81,8 +81,8 @@ class GenerationConfig:
     # El modelo paraphrase-multilingual-MiniLM-L12-v2 sobre textos legales
     # produce scores máximos de ~0.23 para consultas relevantes.
     # Queries sin sentido (typos, texto aleatorio) producen scores < 0.05.
-    # Umbral 0.10 rechaza noise y acepta consultas jurídicas legítimas.
-    min_similarity_to_generate: float = 0.10
+    # Umbral 0.08 rechaza noise y acepta consultas jurídicas legítimas.
+    min_similarity_to_generate: float = 0.08
 
     # --- Logging de llamadas al LLM ---
     log_prompts: bool = False        # True en desarrollo, False en producción

@@ -1,7 +1,7 @@
 data/*.db
 data/*.sqlite3
 data/*.csv
-data/chroma_db/
+# data/chroma_db/  ← incluido en repo para despliegue (Render.com)
 
 venv/
 env/

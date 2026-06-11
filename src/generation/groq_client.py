@@ -7,7 +7,7 @@
 import os
 import time
 import logging
-from typing import Optional
+from typing import Optional, List, Dict
 
 from dotenv import load_dotenv
 
@@ -56,12 +56,16 @@ class GroqClient:
             self._client = Groq(api_key=self._api_key)
         return self._client
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, history: Optional[List[Dict[str, str]]] = None) -> str:
         """
         Envía el prompt a Groq/Llama y retorna el texto generado.
 
         Args:
-            prompt: Texto completo del prompt (contexto + pregunta ya armados).
+            prompt:  Texto completo del prompt (contexto + pregunta ya armados).
+            history: Historial de conversación previo en formato
+                     [{"role": "user"|"assistant", "content": "..."}].
+                     Si se provee, se incluye antes del mensaje actual
+                     para dar contexto multi-turno al LLM.
 
         Returns:
             Texto de la respuesta generada.
@@ -76,18 +80,22 @@ class GroqClient:
             try:
                 logger.debug(f"[Groq] Intento {intento}/{self.config.max_retries}")
 
+                # Armar lista de mensajes con historial opcional
+                messages = [
+                    {
+                        "role": "system",
+                        "content": self.config.system_instruction,
+                    }
+                ]
+                # Insertar historial previo (si existe)
+                if history:
+                    messages.extend(history)
+                # Mensaje actual del usuario
+                messages.append({"role": "user", "content": prompt})
+
                 response = client.chat.completions.create(
                     model=self.config.model_name,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": self.config.system_instruction,
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt,
-                        },
-                    ],
+                    messages=messages,
                     temperature=self.config.temperature,
                     max_tokens=self.config.max_tokens,
                     top_p=self.config.top_p,

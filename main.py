@@ -20,9 +20,10 @@ from src.processors.document_loader import process_documents, standardize
 from src.processors.text_segmenter import segment_documents_for_article
 from src.processors.embedding_processor import run_embedding_pipeline
 
-# ─── Pipeline de consulta (nuevo) ───────────────────────────
+# ─── Pipeline de consulta (nuevo) ────────────────────────────
 from src.retrieval.rag_pipeline import RAGPipeline
 from src.generation.response_generator import ResponseGenerator
+from src.memory.conversation_memory import ConversationMemory
 
 
 def run_ingesta():
@@ -57,9 +58,9 @@ def run_consulta(pregunta: str, verbose: bool = False) -> dict:
     generator  = ResponseGenerator()
 
     # Paso 1: Retrieval + construcción de contexto + prompt
-    # k=15: recupera más candidatos para aumentar cobertura temática
-    # max_documents=10: usa más fragmentos en el contexto del LLM
-    rag_output = pipeline.run(pregunta, k=15, max_documents=10, verbose=verbose)
+    # k=10: candidatos para ChromaDB (el reranker reduce a top 5)
+    # max_documents=8: fragmentos que llegan al LLM
+    rag_output = pipeline.run(pregunta, k=10, max_documents=8, verbose=verbose)
 
     # Paso 2: Generación de respuesta con LLM
     resultado  = generator.generate(rag_output)
@@ -85,18 +86,19 @@ def imprimir_resultado(resultado: dict):
 
 
 def run_interactivo():
-    """Modo interactivo: el ciudadano hace preguntas en un loop."""
+    """Modo interactivo con memoria multi-turno: el ciudadano hace preguntas en un loop."""
     print("\n" + "=" * 60)
     print("  SISTEMA RAG — NORMAS DE TRÁNSITO COLOMBIANAS")
-    print("  Escribe 'salir' para terminar")
+    print("  Escribe 'salir' para terminar | 'limpiar' para reiniciar la memoria")
     print("=" * 60 + "\n")
 
     pipeline  = RAGPipeline()
     generator = ResponseGenerator()
+    memory    = ConversationMemory(max_turns=5)  # recuerda los últimos 5 turnos
 
     while True:
         try:
-            pregunta = input("🚦 Tu pregunta: ").strip()
+            pregunta = input("\U0001f6a6 Tu pregunta: ").strip()
         except (EOFError, KeyboardInterrupt):
             print("\nHasta luego.")
             break
@@ -108,9 +110,27 @@ def run_interactivo():
             print("Hasta luego.")
             break
 
+        if pregunta.lower() in {"limpiar", "clear", "reset"}:
+            memory.clear()
+            print("\U0001f9f9 Memoria limpiada. Nueva sesión iniciada.\n")
+            continue
+
         print("\n⏳ Consultando normas...\n")
-        rag_output = pipeline.run(pregunta, k=15, max_documents=10)
-        resultado  = generator.generate(rag_output)
+        rag_output = pipeline.run(pregunta, k=10, max_documents=8)
+
+        # Pasar el historial previo al generador para contexto multi-turno
+        historial  = memory.get_history() if not memory.is_empty() else None
+        resultado  = generator.generate(rag_output, history=historial)
+
+        # Guardar el turno en memoria solo si fue exitoso
+        if resultado.get("status") == "éxito" and resultado.get("respuesta"):
+            memory.add_turn(
+                user_message=pregunta,
+                assistant_message=resultado["respuesta"],
+            )
+            if memory.turn_count() > 1:
+                print(f"\U0001f9e0 Memoria activa: {memory.turn_count()} turnos previos en contexto\n")
+
         imprimir_resultado(resultado)
 
 

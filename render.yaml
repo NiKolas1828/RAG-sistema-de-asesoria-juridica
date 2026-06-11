@@ -1,0 +1,26 @@
+# render.yaml — Configuración de despliegue en Render.com
+# Documentación: https://render.com/docs/render-yaml
+
+services:
+  - type: web
+    name: rag-transito-bot
+    runtime: python
+    region: oregon       # Región más cercana a Colombia con tier gratuito
+    plan: free
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m src.telegram.bot
+
+    # Variables de entorno (las secretas se configuran en el dashboard de Render)
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: CHROMA_MODE
+        value: local
+      - key: RERANKER_ENABLED
+        value: "false"
+      # Las siguientes se configuran manualmente en Render Dashboard → Environment:
+      # - TELEGRAM_BOT_TOKEN  (secreto)
+      # - GROQ_API_KEY        (secreto)
+      # - GOOGLE_API_KEY      (secreto, opcional)
+      # - WEBHOOK_URL         (URL de tu servicio en Render, ej: https://rag-transito-bot.onrender.com)

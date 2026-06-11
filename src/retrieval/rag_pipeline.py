@@ -8,7 +8,7 @@ from src.retrieval.search_handler import SearchHandler
 class RAGPipeline:
     """Orquesta búsqueda semántica, construcción de contexto y armado de prompt."""
 
-    def __init__(self, max_context_tokens: int = 2000, min_similarity: float = 0.03, response_buffer: int = 128):
+    def __init__(self, max_context_tokens: int = 5000, min_similarity: float = 0.03, response_buffer: int = 128):
         self.search_handler = SearchHandler()
         self.context_builder = ContextBuilder(max_tokens=max_context_tokens, min_similarity=min_similarity)
         self.prompt_builder = PromptBuilder(response_buffer=response_buffer)
