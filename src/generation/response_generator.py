@@ -5,7 +5,8 @@
 # ============================================================
 
 import logging
-from typing import Dict, Any, Optional
+import time
+from typing import Dict, Any, Optional, List
 from datetime import datetime
 
 from src.generation.llm_config import GenerationConfig, generation_config
@@ -13,6 +14,10 @@ from src.generation.gemini_client import GeminiClient, GeminiRateLimitError, Gem
 from src.generation.groq_client import GroqClient, GroqClientError
 
 logger = logging.getLogger(__name__)
+
+# Tiempo de espera del circuit breaker de Gemini (segundos).
+# Tras un rate limit, se salta Gemini durante este tiempo.
+GEMINI_COOLDOWN_SECONDS = 300  # 5 minutos
 
 # Respuesta estándar cuando no hay contexto suficiente
 RESPUESTA_SIN_CONTEXTO = (
@@ -42,6 +47,8 @@ class ResponseGenerator:
         self.config = config or generation_config
         self._gemini: Optional[GeminiClient] = None
         self._groq: Optional[GroqClient] = None
+        # Circuit breaker: timestamp de la última vez que Gemini dio rate limit
+        self._gemini_rate_limit_at: float = 0.0
 
     def _get_gemini(self) -> GeminiClient:
         if self._gemini is None:
@@ -59,10 +66,11 @@ class ResponseGenerator:
         Usa las claves reales que devuelve ContextBuilder:
           - 'contexto_formateado': texto con los fragmentos normativos
           - 'documentos_usados': cantidad de chunks incluidos
-          - 'score_promedio': similitud promedio de los chunks seleccionados
+          - 'chunks_seleccionados': lista de chunks con similitud individual
 
-        Nota: la clave 'chunks_seleccionados' no existe en el output de
-        ContextBuilder — usar 'score_promedio' y 'documentos_usados'.
+        Se evalúa si la similitud MÁXIMA de los chunks seleccionados supera
+        el umbral configurado, evitando rechazar consultas legítimas donde
+        los chunks secundarios disminuyen el promedio.
         """
         if rag_output.get("status") != "éxito":
             return False
@@ -72,22 +80,31 @@ class ResponseGenerator:
             return False
 
         # Verificar que hay documentos y que el contexto tiene contenido
-        if contexto.get("documentos_usados", 0) == 0:
+        chunks = contexto.get("chunks_seleccionados", [])
+        if not chunks:
             return False
 
         if not contexto.get("contexto_formateado", "").strip():
             return False
 
-        # Verificar similitud promedio contra el umbral configurado
-        score = contexto.get("score_promedio", 0.0)
-        return score >= self.config.min_similarity_to_generate
+        # Verificar similitud máxima contra el umbral configurado
+        scores = [d.get("similitud", 0.0) for d in chunks]
+        max_score = max(scores) if scores else 0.0
+        return max_score >= self.config.min_similarity_to_generate
 
-    def generate(self, rag_output: Dict[str, Any]) -> Dict[str, Any]:
+    def generate(
+        self,
+        rag_output: Dict[str, Any],
+        history: Optional[List[Dict[str, str]]] = None,
+    ) -> Dict[str, Any]:
         """
         Genera la respuesta final a partir del output de RAGPipeline.
 
         Args:
             rag_output: Diccionario retornado por RAGPipeline.run()
+            history:    Historial de conversación previo (multi-turno).
+                        Lista de dicts [{"role": "user"|"assistant", "content": "..."}].
+                        Si es None, se trata como primera pregunta de la sesión.
 
         Returns:
             Diccionario con:
@@ -134,6 +151,17 @@ class ResponseGenerator:
             logger.debug(f"[Generator] Prompt enviado:\n{prompt}")
 
         # --- Caso 2: Intentar con Gemini (principal) ---
+        # Circuit breaker: si Gemini dio rate limit hace menos de GEMINI_COOLDOWN_SECONDS,
+        # saltar directo a Groq sin hacer la llamada fallida.
+        gemini_en_cooldown = (
+            time.time() - self._gemini_rate_limit_at < GEMINI_COOLDOWN_SECONDS
+        )
+        if gemini_en_cooldown:
+            logger.debug(
+                f"[Generator] Gemini en cooldown, usando Groq directamente."
+            )
+            return self._generar_con_groq(prompt, base_result, history=history)
+
         try:
             respuesta = self._get_gemini().generate(prompt)
             if self.config.log_responses:
@@ -146,9 +174,10 @@ class ResponseGenerator:
             }
 
         except GeminiRateLimitError as e:
-            # --- Caso 3: Rate limit → activar fallback Groq ---
+            # Registrar el momento del rate limit para el circuit breaker
+            self._gemini_rate_limit_at = time.time()
             logger.warning(f"[Generator] Gemini rate limit. Activando Groq. ({e})")
-            return self._generar_con_groq(prompt, base_result)
+            return self._generar_con_groq(prompt, base_result, history=history)
 
         except GeminiClientError as e:
             logger.error(f"[Generator] Error Gemini: {e}")
@@ -161,11 +190,14 @@ class ResponseGenerator:
             }
 
     def _generar_con_groq(
-        self, prompt: str, base_result: Dict[str, Any]
+        self,
+        prompt: str,
+        base_result: Dict[str, Any],
+        history: Optional[List[Dict[str, str]]] = None,
     ) -> Dict[str, Any]:
-        """Intenta generar con Groq como fallback."""
+        """Intenta generar con Groq como fallback, incluyendo historial si existe."""
         try:
-            respuesta = self._get_groq().generate(prompt)
+            respuesta = self._get_groq().generate(prompt, history=history)
             if self.config.log_responses:
                 logger.debug(f"[Generator] Respuesta Groq:\n{respuesta}")
             return {

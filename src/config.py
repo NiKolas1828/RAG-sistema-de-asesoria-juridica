@@ -23,3 +23,15 @@ EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 CHROMA_MODE = os.getenv("CHROMA_MODE", "local").lower().strip()  # "local" o "http"
 CHROMA_HOST = os.getenv("CHROMA_HOST", "localhost").strip()
 CHROMA_PORT = int(os.getenv("CHROMA_PORT", "8000"))
+
+# ─── Re-Ranking (Cross-Encoder) ────────────────────────────
+# Desactivado por defecto: el modelo de 471MB es demasiado lento en CPU.
+# Para activar: RERANKER_ENABLED=true en el archivo .env
+# Modelos disponibles:
+#   Ligero (~85MB, solo inglés): cross-encoder/ms-marco-MiniLM-L-6-v2
+#   Multilingüe (~471MB):        cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+RERANKER_ENABLED = os.getenv("RERANKER_ENABLED", "false").lower().strip() == "true"
+RERANKER_MODEL   = os.getenv(
+    "RERANKER_MODEL",
+    "cross-encoder/ms-marco-MiniLM-L-6-v2"  # ligero y rápido en CPU
+)
