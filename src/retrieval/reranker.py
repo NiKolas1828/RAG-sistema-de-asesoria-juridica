@@ -47,10 +47,28 @@ class Reranker:
         """Carga el modelo Cross-Encoder (se cachea en disco tras la primera descarga)."""
         if self._model is None:
             try:
+                import torch
                 from sentence_transformers import CrossEncoder  # type: ignore
                 logger.info(f"[Reranker] Cargando modelo '{RERANKER_MODEL}'...")
-                self._model = CrossEncoder(RERANKER_MODEL)
-                logger.info("[Reranker] Modelo listo.")
+                
+                device = "cuda" if torch.cuda.is_available() else "cpu"
+                if device == "cpu":
+                    torch.set_num_threads(1)
+                    
+                model = CrossEncoder(RERANKER_MODEL, device=device)
+                
+                if device == "cpu":
+                    # Configurar backend a qnnpack para evitar error de instrucción ilegal (SIGILL)
+                    # en procesadores sin soporte para AVX2 (fbgemm lo requiere).
+                    torch.backends.quantized.engine = 'qnnpack'
+                    
+                    # El CrossEncoder tiene el modelo PyTorch internamente en model.model
+                    model.model = torch.quantization.quantize_dynamic(
+                        model.model, {torch.nn.Linear}, dtype=torch.qint8
+                    )
+                
+                self._model = model
+                logger.info("[Reranker] Modelo listo y cuantizado.")
             except ImportError:
                 raise ImportError(
                     "sentence-transformers no instalado. "

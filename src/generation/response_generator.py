@@ -12,6 +12,8 @@ from datetime import datetime
 from src.generation.llm_config import GenerationConfig, generation_config
 from src.generation.gemini_client import GeminiClient, GeminiRateLimitError, GeminiClientError
 from src.generation.groq_client import GroqClient, GroqClientError
+from src.generation.llm_config import GroqFallbackConfig
+from src.generation.response_cache import response_cache
 
 logger = logging.getLogger(__name__)
 
@@ -47,6 +49,7 @@ class ResponseGenerator:
         self.config = config or generation_config
         self._gemini: Optional[GeminiClient] = None
         self._groq: Optional[GroqClient] = None
+        self._groq_fallback: Optional[GroqClient] = None  # Tercer nivel: Gemma2 9B
         # Circuit breaker: timestamp de la última vez que Gemini dio rate limit
         self._gemini_rate_limit_at: float = 0.0
 
@@ -59,6 +62,11 @@ class ResponseGenerator:
         if self._groq is None:
             self._groq = GroqClient(self.config.groq)
         return self._groq
+
+    def _get_groq_fallback(self) -> GroqClient:
+        if self._groq_fallback is None:
+            self._groq_fallback = GroqClient(self.config.groq_fallback)
+        return self._groq_fallback
 
     def _hay_contexto_suficiente(self, rag_output: Dict[str, Any]) -> bool:
         """Verifica que el retrieval encontró chunks relevantes.
@@ -116,17 +124,43 @@ class ResponseGenerator:
                 - error (str | None): Mensaje de error si aplica
         """
         timestamp = datetime.now().isoformat()
+        prompt_meta = rag_output.get("prompt") or {}
         base_result = {
             "query_original": rag_output.get("query_original", ""),
             "timestamp": timestamp,
             "modelo_usado": None,
             "respuesta": None,
-            "tokens_prompt": rag_output.get("prompt", {}).get("tokens_prompt", 0),
+            "tokens_prompt": prompt_meta.get("tokens_prompt", 0),
+            "question_type": prompt_meta.get("question_type", "general"),
             "status": "error",
             "error": None,
         }
 
+        # --- Caso 0: Verificar caché antes de cualquier llamada a la API ---
+        query_original = rag_output.get("query_original", "")
+        cache_key = response_cache.make_key(query_original)
+        cached = response_cache.get(cache_key)
+        if cached:
+            logger.info("[Generator] 🎯 Respondiendo desde caché (0 tokens consumidos).")
+            return {
+                **base_result,
+                "respuesta": cached["respuesta"],
+                "modelo_usado": f"cache/{cached['modelo_usado']}",
+                "status": "éxito",
+            }
+
+        # --- Caso 0.5: Domain Guard rechazó la consulta ---
+        if rag_output.get("status") == "fuera_de_dominio":
+            logger.info("[Generator] Consulta fuera del dominio de tránsito. Respondiendo sin LLM.")
+            return {
+                **base_result,
+                "respuesta": rag_output.get("respuesta_directa", RESPUESTA_SIN_CONTEXTO),
+                "modelo_usado": "domain_guard",
+                "status": "fuera_de_dominio",
+            }
+
         # --- Caso 1: RAG no encontró contexto suficiente ---
+
         if not self._hay_contexto_suficiente(rag_output):
             logger.info("[Generator] Sin contexto suficiente. Respondiendo sin LLM.")
             return {
@@ -137,7 +171,7 @@ class ResponseGenerator:
             }
 
         # --- Extraer el prompt armado por PromptBuilder ---
-        prompt = rag_output.get("prompt", {}).get("prompt", "")
+        prompt = prompt_meta.get("prompt", "")
         if not prompt:
             return {
                 **base_result,
@@ -160,16 +194,18 @@ class ResponseGenerator:
             logger.debug(
                 f"[Generator] Gemini en cooldown, usando Groq directamente."
             )
-            return self._generar_con_groq(prompt, base_result, history=history)
+            return self._generar_con_groq(prompt, base_result, history=history, cache_key=cache_key)
 
         try:
             respuesta = self._get_gemini().generate(prompt)
             if self.config.log_responses:
                 logger.debug(f"[Generator] Respuesta Gemini:\n{respuesta}")
+            modelo = f"{self.config.gemini.model_name}"
+            response_cache.set(cache_key, respuesta, modelo_usado=modelo)
             return {
                 **base_result,
                 "respuesta": respuesta,
-                "modelo_usado": "gemini-2.0-flash",
+                "modelo_usado": modelo,
                 "status": "éxito",
             }
 
@@ -177,14 +213,14 @@ class ResponseGenerator:
             # Registrar el momento del rate limit para el circuit breaker
             self._gemini_rate_limit_at = time.time()
             logger.warning(f"[Generator] Gemini rate limit. Activando Groq. ({e})")
-            return self._generar_con_groq(prompt, base_result, history=history)
+            return self._generar_con_groq(prompt, base_result, history=history, cache_key=cache_key)
 
         except GeminiClientError as e:
             logger.error(f"[Generator] Error Gemini: {e}")
             return {
                 **base_result,
                 "respuesta": RESPUESTA_SIN_CONTEXTO,
-                "modelo_usado": "gemini-2.0-flash",
+                "modelo_usado": self.config.gemini.model_name,
                 "status": "error",
                 "error": str(e),
             }
@@ -194,24 +230,53 @@ class ResponseGenerator:
         prompt: str,
         base_result: Dict[str, Any],
         history: Optional[List[Dict[str, str]]] = None,
+        cache_key: str = "",
     ) -> Dict[str, Any]:
-        """Intenta generar con Groq como fallback, incluyendo historial si existe."""
+        """Fallback #1: Groq Llama 3.3 70B. Si también falla, activa Fallback #2."""
         try:
             respuesta = self._get_groq().generate(prompt, history=history)
             if self.config.log_responses:
                 logger.debug(f"[Generator] Respuesta Groq:\n{respuesta}")
+            modelo = f"groq/{self.config.groq.model_name}"
+            if cache_key:
+                response_cache.set(cache_key, respuesta, modelo_usado=modelo)
             return {
                 **base_result,
                 "respuesta": respuesta,
-                "modelo_usado": "groq/llama-3.3-70b",
+                "modelo_usado": modelo,
                 "status": "éxito",
             }
         except GroqClientError as e:
-            logger.error(f"[Generator] Error Groq: {e}")
+            logger.warning(f"[Generator] Groq Llama 70B agotado: {e}. Activando Fallback #2 (Llama 3.1 8B)...")
+            return self._generar_con_groq_fallback(prompt, base_result, history=history, cache_key=cache_key)
+
+    def _generar_con_groq_fallback(
+        self,
+        prompt: str,
+        base_result: Dict[str, Any],
+        history: Optional[List[Dict[str, str]]] = None,
+        cache_key: str = "",
+    ) -> Dict[str, Any]:
+        """Fallback #2 (tercer nivel): Groq Llama 3.1 8B. Pool de tokens independiente."""
+        try:
+            respuesta = self._get_groq_fallback().generate(prompt, history=history)
+            if self.config.log_responses:
+                logger.debug(f"[Generator] Respuesta Groq Llama 8B:\n{respuesta}")
+            modelo = f"groq/{self.config.groq_fallback.model_name}"
+            if cache_key:
+                response_cache.set(cache_key, respuesta, modelo_usado=modelo)
+            return {
+                **base_result,
+                "respuesta": respuesta,
+                "modelo_usado": modelo,
+                "status": "éxito",
+            }
+        except GroqClientError as e:
+            logger.error(f"[Generator] Error Groq Llama 8B (Fallback #2): {e}")
             return {
                 **base_result,
                 "respuesta": RESPUESTA_SIN_CONTEXTO,
-                "modelo_usado": "groq/llama-3.3-70b",
+                "modelo_usado": f"groq/{self.config.groq_fallback.model_name}",
                 "status": "error",
                 "error": str(e),
             }

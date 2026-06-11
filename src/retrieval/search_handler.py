@@ -20,8 +20,8 @@ from src.retrieval.reranker import Reranker
 logger = logging.getLogger(__name__)
 
 # Número de chunks a pasar al Cross-Encoder.
-# Mantenerlo bajo (5-8) para que el reranker sea rápido en CPU.
-RERANK_TOP_N = 5
+# Un valor de 8 equilibra precisión (evita perder chunks relevantes ocultos por MiniLM) y velocidad en CPU.
+RERANK_TOP_N = 8
 
 
 class SearchHandler:
@@ -30,7 +30,7 @@ class SearchHandler:
         self.expander  = None  # Lazy init
         self.reranker  = None  # Lazy init
 
-    def perform_search(self, query: str, k: int = 5, verbose: bool = False) -> dict:
+    def perform_search(self, query: str, k: int = 5, verbose: bool = False, history: list = None) -> dict:
         try:
             if verbose:
                 print(f"[*] Procesando consulta base: '{query}'...")
@@ -40,20 +40,13 @@ class SearchHandler:
             if self.reranker is None:
                 self.reranker = Reranker()
 
-            queries = self.expander.expand_query(query)
+            queries = self.expander.expand_query(query, history=history)
             if verbose:
                 print(f"[*] Multi-Query: Se buscarán {len(queries)} variaciones de la consulta.")
 
-            # ── Detectar código de infracción en cualquiera de las queries ──
+            # No aplicamos filtros estrictos de código aquí porque bloquean la recuperación
+            # de normas complementarias (ej: la resolución de uso de cascos no menciona 'C.24').
             where_doc = None
-            for q in queries:
-                code_match = re.search(r'\b([A-E]\.\d{2})\b', q, re.IGNORECASE)
-                if code_match:
-                    code = code_match.group(1).upper()
-                    where_doc = {"$contains": code}
-                    if verbose:
-                        print(f"[*] Filtro estricto aplicado para el código: {code}")
-                    break  # Con un código detectado es suficiente
 
             # ── Generar embeddings en lote (batch) para evitar bloqueos y mejorar latencia ──
             try:

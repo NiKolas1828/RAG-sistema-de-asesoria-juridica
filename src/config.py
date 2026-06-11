@@ -30,8 +30,8 @@ CHROMA_PORT = int(os.getenv("CHROMA_PORT", "8000"))
 # Modelos disponibles:
 #   Ligero (~85MB, solo inglés): cross-encoder/ms-marco-MiniLM-L-6-v2
 #   Multilingüe (~471MB):        cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
-RERANKER_ENABLED = os.getenv("RERANKER_ENABLED", "false").lower().strip() == "true"
+RERANKER_ENABLED = os.getenv("RERANKER_ENABLED", "true").lower().strip() == "true"
 RERANKER_MODEL   = os.getenv(
     "RERANKER_MODEL",
-    "cross-encoder/ms-marco-MiniLM-L-6-v2"  # ligero y rápido en CPU
+    "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"  # Multilingüe para alta precisión en español
 )

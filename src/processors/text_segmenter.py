@@ -126,9 +126,103 @@ def export_chunks_to_csv(cursor):
     print(f"[*] Archivo de revisión de chunks generado en: {CSV_REVISION_PATH}")
 
 
+def _merge_and_split_articles(articles_data: list, title: str, effective_date: str) -> list:
+    """
+    Transforma los artículos extraídos en chunks óptimos para el RAG.
+
+    Reglas:
+      1. Artículo < MIN_CHUNK_TOKENS  → merge con el siguiente artículo.
+         (Evita chunks triviales de 1-2 líneas que no aportan contexto.)
+      2. Artículo > MAX_CHUNK_TOKENS  → split semántico en puntos naturales:
+         primero párrafos (doble salto de línea), luego oraciones, luego espacio.
+         Cada parte lleva el prefijo "[Art.X - Continuación (N/M)]" para mantener
+         trazabilidad y mejorar la similitud con queries que mencionen el artículo.
+      3. Artículo en rango óptimo     → chunk único, sin modificaciones.
+    """
+    CHARS_PER_TOKEN = 4
+    MIN_CHUNK_TOKENS = 300   # artículos más cortos se fusionan
+    MAX_CHUNK_TOKENS = 700   # artículos más largos se parten
+
+    base_meta = {
+        "fuente": title.replace(".pdf", "").replace(".docx", ""),
+        "fecha_vigencia": effective_date,
+    }
+
+    chunks_out = []
+    # Buffer de artículos pequeños que todavía no se han emitido
+    merge_buffer_texts: list = []
+    merge_buffer_meta: dict = {}
+
+    def _flush_merge_buffer():
+        """Emite el buffer de fusión como un chunk."""
+        if not merge_buffer_texts:
+            return
+        text = "\n\n".join(merge_buffer_texts).strip()
+        if len(text) >= 30:
+            chunks_out.append({
+                "texto": text,
+                "metadata": {**base_meta, **merge_buffer_meta},
+            })
+        merge_buffer_texts.clear()
+        merge_buffer_meta.clear()
+
+    for art in articles_data:
+        art_text   = art["texto"].strip()
+        art_number = art["numero"]
+        chapter    = art["capitulo"]
+
+        if len(art_text) < 15:
+            continue  # demasiado corto incluso para el buffer
+
+        tokens = len(art_text) // CHARS_PER_TOKEN
+        meta = {**base_meta, "articulo": art_number, "capitulo": chapter}
+
+        if tokens < MIN_CHUNK_TOKENS:
+            # Artículo pequeño → acumular en buffer de fusión
+            merge_buffer_texts.append(art_text)
+            # Actualizar metadata: usa el último artículo del grupo
+            merge_buffer_meta = {"articulo": art_number, "capitulo": chapter}
+
+            # Si el buffer ya supera el mínimo, emitir
+            total_buffer_tokens = sum(len(t) for t in merge_buffer_texts) // CHARS_PER_TOKEN
+            if total_buffer_tokens >= MIN_CHUNK_TOKENS:
+                _flush_merge_buffer()
+
+        elif tokens <= MAX_CHUNK_TOKENS:
+            # Rango óptimo: emitir el buffer previo y este artículo como chunk único
+            _flush_merge_buffer()
+            chunks_out.append({"texto": art_text, "metadata": meta})
+
+        else:
+            # Artículo grande: emitir buffer previo, luego split semántico
+            _flush_merge_buffer()
+
+            # Split en puntos naturales: párrafos > oraciones > espacios
+            splitter = RecursiveCharacterTextSplitter(
+                chunk_size=MAX_CHUNK_TOKENS * CHARS_PER_TOKEN,
+                chunk_overlap=60 * CHARS_PER_TOKEN,    # 60 tokens de solapamiento
+                length_function=len,
+                separators=["\n\n", "\n", ". ", " ", ""],
+            )
+            parts = splitter.split_text(art_text)
+            total = len(parts)
+            for i, part_text in enumerate(parts):
+                if i == 0:
+                    texto = part_text
+                else:
+                    # Prefijo rico: artículo + número de parte para trazabilidad
+                    texto = f"[{art_number} — Continuación {i+1}/{total}]\n{part_text}"
+                chunks_out.append({"texto": texto, "metadata": meta})
+
+    # Emitir lo que quede en el buffer al final
+    _flush_merge_buffer()
+
+    return chunks_out
+
+
 def segment_documents_for_article():
-    """Divide el contenido en chunks optimizando la memoria RAM y DB."""
-    print("\n--- INICIANDO FASE 3: SEGMENTACIÓN RAG ---")
+    """Divide el contenido en chunks optimizados por artículo con fusión y split inteligente."""
+    print("\n--- INICIANDO FASE 3: SEGMENTACIÓN RAG (Chunking Inteligente) ---")
 
     try:
         conn = sqlite3.connect(DB_PATH)
@@ -136,16 +230,8 @@ def segment_documents_for_article():
 
         init_chunks_table(cursor)
 
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=TOKENS_SIZE * CHARS_PER_TOKEN,
-            chunk_overlap=TOKENS_OVERLAP * CHARS_PER_TOKEN,
-            length_function=len,
-            separators=["\n\n", "\n", ".", " ", ""],
-        )
-
         total_chunks = 0
-
-        main_cursor = conn.cursor()
+        main_cursor   = conn.cursor()
         action_cursor = conn.cursor()
 
         main_cursor.execute(
@@ -156,7 +242,7 @@ def segment_documents_for_article():
             if not content:
                 continue
 
-            # Verificamos si este documento ya tiene chunks en la tabla
+            # Verificamos si este documento ya tiene chunks
             action_cursor.execute(
                 "SELECT COUNT(*) FROM chunks WHERE doc_id = ?", (doc_id,)
             )
@@ -164,61 +250,47 @@ def segment_documents_for_article():
 
             if is_segmented > 0:
                 print(
-                    f"[-] Saltando: '{title[:30]}...' ya tiene {is_segmented} fragmentos en la DB."
+                    f"[-] Saltando: '{title[:40]}...' ya tiene {is_segmented} fragmentos."
                 )
                 continue
 
-            print(f"[*] Segmentando nuevo documento ID: {doc_id} - {title[:30]}...")
+            print(f"[*] Segmentando: {title[:50]}...")
 
             effective_date = extract_title_date(title)
-            articles_data = extract_articles_with_context(content)
+            articles_data  = extract_articles_with_context(content)
 
-            for art_data in articles_data:
-                art_number = art_data["numero"]
-                chapter_context = art_data["capitulo"]
-                art_text = art_data["texto"]
+            # Aplicar chunking inteligente (merge + split)
+            chunks = _merge_and_split_articles(articles_data, title, effective_date)
 
-                if len(art_text) < 15:
-                    continue
+            doc_chunks = 0
+            for chunk in chunks:
+                chunk_text = chunk["texto"]
+                metadata   = chunk["metadata"]
+                estimated_tokens = len(chunk_text) // 4
 
-                metadata = {
-                    "fuente": title.replace(".pdf", "").replace(".docx", ""),
-                    "articulo": art_number,
-                    "capitulo": chapter_context,
-                    "fecha_vigencia": effective_date,
-                }
-
-                langchain_chunks = text_splitter.split_text(art_text)
-
-                for i, chunk_text in enumerate(langchain_chunks):
-                    if i > 0:
-                        chunk_text = f"[{art_number} - Continuación] {chunk_text}"
-
-                    estimated_tokens = len(chunk_text) // CHARS_PER_TOKEN
-
-                    action_cursor.execute(
-                        """
-                        INSERT INTO chunks (doc_id, texto, metadata, tokens_estimados)
-                        VALUES (?, ?, ?, ?)
+                action_cursor.execute(
+                    """
+                    INSERT INTO chunks (doc_id, texto, metadata, tokens_estimados)
+                    VALUES (?, ?, ?, ?)
                     """,
-                        (
-                            doc_id,
-                            chunk_text,
-                            json.dumps(metadata, ensure_ascii=False),
-                            estimated_tokens,
-                        ),
-                    )
+                    (
+                        doc_id,
+                        chunk_text,
+                        json.dumps(metadata, ensure_ascii=False),
+                        estimated_tokens,
+                    ),
+                )
+                total_chunks += 1
+                doc_chunks   += 1
 
-                    total_chunks += 1
+                if total_chunks % 500 == 0:
+                    conn.commit()
+                    print(f"   → [Guardado intermedio] {total_chunks} chunks procesados...")
 
-                    if total_chunks % 500 == 0:
-                        conn.commit()
-                        print(
-                            f"   -> [Guardado intermedio] {total_chunks} chunks procesados en disco..."
-                        )
+            print(f"   → {doc_chunks} chunks generados para este documento.")
 
         conn.commit()
-        print(f"[*] Segmentación exitosa. Se generaron {total_chunks} chunks en total.")
+        print(f"\n[✓] Segmentación exitosa. Total: {total_chunks} chunks generados.")
 
         export_chunks_to_csv(conn.cursor())
         conn.close()
@@ -229,3 +301,5 @@ def segment_documents_for_article():
         raise Exception(
             f"DatabaseTransactionException: Segment generation failed. Details: {str(e)}"
         )
+
+
